@@ -115,13 +115,16 @@ class ToolAPI:  # type: ignore
         name = spell.name.lower().replace(" ", "_")
         filename = f"{spell.source}_{name}.pdf"
         output_path = f"generated/{filename}"
+        os.makedirs("generated", exist_ok=True)
 
+        base_path = os.path.dirname(TEMPLATE_PATH)
         with open(output_path, "wb") as pdf_file:
-            pisa_status = pisa.CreatePDF(filled_html, dest=pdf_file)  # type: ignore
+            pisa_status = pisa.CreatePDF(filled_html, dest=pdf_file, path=base_path)  # type: ignore
 
         if pisa_status.err:  # type: ignore
             return "Error generating PDF layout."
 
+        print(f"- Generated {filename}")
         return f"Created {filename} successfully!"
 
 
@@ -129,5 +132,5 @@ if __name__ == "__main__":
     api = ToolAPI()
     html_path = os.path.join(os.path.dirname(__file__), "index.html")
 
-    webview.create_window(title="Grimoire", url=html_path, js_api=api, width=800, height=600)  # type: ignore
+    webview.create_window(title="Grimoire", url=html_path, js_api=api, width=800, height=600, maximized=True)  # type: ignore
     webview.start()
