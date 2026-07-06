@@ -1,0 +1,33 @@
+name: MAIN
+
+on:
+  pull_request:
+    paths-ignore:
+      - "benchmarks/**"
+      - "*.md"
+      - "*.bat"
+      - ".env.example"
+      - "./.github/**"
+      - "cspell.json"
+  workflow_dispatch:
+
+jobs:
+  requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: ./.github/actions/setup
+
+      - name: Install pip-check-reqs
+        run: |
+          pip install pip-check-reqs
+
+      - name: Check for imports missing from requirements.txt
+        run: pip-missing-reqs grimoire --ignore-file=requirements.txt
+
+      - name: Check for unused packages in requirements.txt
+        run: pip-extra-reqs grimoire --ignore-file=requirements.txt
