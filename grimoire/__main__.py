@@ -1,22 +1,42 @@
 import os
 import re
+from typing import Any
 
 import webview
 from xhtml2pdf import pisa  # type: ignore
 
 from logic.dnd_abstract import Description
-from logic.spell import SPELLS
+from logic.spell import SPELLS, Spell
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 
 
 class ToolAPI:  # type: ignore
+    selected: set[Spell] = set()
 
     def fetch_spells(self) -> list[dict[str, str | int | None]]:
         return sorted(
             (s.json for s in SPELLS.entries),
             key=lambda spell: (spell["level"], spell["name"]),
         )
+
+    def _get_spell(self, name: str, source: str) -> Spell | None:
+        spell = [s for s in SPELLS.get(name, allowed_sources={source}) if s.source == source]
+        if len(spell) == 0:
+            return None
+        return spell[0]
+
+    def select_spell(self, name: str, source: str) -> list[dict[str, Any]]:
+        spell = self._get_spell(name, source)
+        if spell:
+            self.selected.add(spell)
+        return [s.json for s in self.selected]
+
+    def deselect_spell(self, name: str, source: str) -> list[dict[str, Any]]:
+        spell = self._get_spell(name, source)
+        if spell:
+            self.selected.remove(spell)
+        return [s.json for s in self.selected]
 
     def _markdown_to_html(self, text: str) -> str:
         text = re.sub(r"\*\*\*(.*?)\*\*\*", r"<strong><em>\1</em></strong>", text)
@@ -99,10 +119,9 @@ class ToolAPI:  # type: ignore
         return self._markdown_to_html(html)
 
     def export_spell_pdf(self, name: str, source: str):
-        spell = SPELLS.get(name, allowed_sources=set(source))
-        if len(spell) == 0:
+        spell = self._get_spell(name, source)
+        if spell is None:
             return f"Could not find Spell {name} {source}"
-        spell = spell[0]
 
         with open(TEMPLATE_PATH, "r", encoding="utf-8") as file:
             template_content = file.read()

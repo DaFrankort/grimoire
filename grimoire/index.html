@@ -8,6 +8,21 @@
 <body>
   <h3>Available Spells</h3>
   <button onclick="getSpells()">Load Spells</button>
+  <table id="selected-spell-table">
+    <thead>
+      <tr>
+        <th>Spell</th>
+        <th>Source</th>
+        <th>Level</th>
+        <th>School</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="selected-spells"></tbody>
+  </table>
+
+  <br>
+
   <table id="spell-table" style="display: none; margin-top: 15px">
     <thead>
       <tr>
@@ -21,11 +36,47 @@
     <tbody id="spell-list"></tbody>
   </table>
   <script>
+    function updateSelectedSpells(spells) {
+      const tbody = document.getElementById("selected-spells");
+      const table = document.getElementById("selected-spell-table");
+      tbody.innerHTML = "";
+
+      spells.forEach((spell) => {
+        const row = document.createElement("tr");
+        name = spell.name;
+        if (spell.url) name = `<a href="${spell.url}" target="_blank" rel="noopener noreferrer">${spell.name}</a>`;
+        row.innerHTML = `
+                          <td>${name}</td>
+                          <td>${spell.source}</td>
+                          <td>${spell.level}</td>
+                          <td>${spell.school}</td>
+                          <td>
+                              <button class="btn-pdf" onclick="downloadPdf('${spell.name.replace(/'/g, "\\'")}', '${spell.source}')">PDF</button>
+                              <button class="btn-sub" onClick="deselectSpell('${spell.name.replace(/'/g, "\\'")}', '${spell.source}')">-</button>
+                          </td>
+                      `;
+        tbody.appendChild(row);
+      });
+      table.style.display = "table";
+    }
+
     function downloadPdf(name, source) {
       window.pywebview.api.export_spell_pdf(name, source).then(message => {
         alert(message); // Let the user know it worked
       });
     }
+
+    function selectSpell(name, source) {
+      window.pywebview.api.select_spell(name, source).then(selected => {
+        updateSelectedSpells(selected)
+      })
+    }
+
+    function deselectSpell(name, source) {
+        window.pywebview.api.deselect_spell(name, source).then(selected => {
+          updateSelectedSpells(selected)
+        })
+      }
 
     function getSpells() {
       const tbody = document.getElementById("spell-list");
@@ -44,6 +95,7 @@
                             <td>${spell.school}</td>
                             <td>
                                 <button class="btn-pdf" onclick="downloadPdf('${spell.name.replace(/'/g, "\\'")}', '${spell.source}')">PDF</button>
+                                <button class="btn-add" onClick="selectSpell('${spell.name.replace(/'/g, "\\'")}', '${spell.source}')">+</button>
                             </td>
                         `;
           tbody.appendChild(row);
@@ -51,6 +103,8 @@
         table.style.display = "table";
       });
     }
+
+    getSpells()
   </script>
 </body>
 

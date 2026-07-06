@@ -9,8 +9,6 @@ body {
     text-transform: uppercase;
 }
 
-.meta {
-    margin-bottom: 20px;
-    padding: 10px;
-    border-bottom: 1px solid #d2b48c;
+h1, h2, h3 {
+    font-family: fantasy;
 }
