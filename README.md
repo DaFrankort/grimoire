@@ -7,6 +7,7 @@ Using Python 3.11 or higher, create a virtual environment and install the depend
 git submodule update --init
 
 python -m venv venv
+source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
