@@ -7,14 +7,19 @@
 </head>
 
 <body>
-    <h1 class="title">{name}</h1>
-    <div>
-        <p><strong>Level:</strong> {level} | <strong>School:</strong> {school}</p>
-        <p><strong>Source:</strong> {source}</p>
+    <div class="title">
+        <h1 id="name">{name}</h1>
+        <p id="source">{source}</p>
     </div>
-
-    <h3>Description</h3>
-    <p>{description}</p>
+    <p>{subtitle}</p>
+    <div class="summary">
+        <p><b>Casting Time:</b> {casting}</p>
+        <p><b>Range:</b> {range}</p>
+        <p><b>Components:</b> {components}</p>
+        <p><b>Duration:</b> {duration}</p>
+    </div>
+    <hr>
+    <div>{description}</div>
 </body>
 
 </html>

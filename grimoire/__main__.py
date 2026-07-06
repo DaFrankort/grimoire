@@ -75,7 +75,7 @@ class ToolAPI:  # type: ignore
                 # Build Rows
                 table_html.append("<tbody>")
                 for row in table_data["rows"]:
-                    table_html.append("tr")
+                    table_html.append("<tr>")
                     for cell in row:
                         # Handle specific dict structures inside cell grids
                         if isinstance(cell, dict) and cell.get("type") == "range":
@@ -128,9 +128,12 @@ class ToolAPI:  # type: ignore
 
         filled_html = template_content.format(
             name=spell.name,
-            level=spell.level_int,
-            school=spell.school,
             source=spell.source,
+            subtitle=spell.subtitle,
+            casting=spell.casting_time,
+            range=spell.spell_range,
+            components=spell.components,
+            duration=spell.duration,
             description=self._description_to_html(spell.description),
         )
 

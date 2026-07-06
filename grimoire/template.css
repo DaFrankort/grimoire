@@ -1,14 +1,52 @@
-body {
-    font-family: sans-serif;
-    padding: 20px;
-    background: #faf6ee;
+@page {
+    size: A5;
 }
 
-.title {
-    color: #800000;
+body {
+    font-family: sans-serif;
+    font-size: 20px;
+    padding: 20px;
+    margin: 0;
+}
+
+h1 {
     text-transform: uppercase;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+p {
+    margin: 0;
 }
 
 h1, h2, h3 {
     font-family: fantasy;
+}
+
+.title{
+    display: flex;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+}
+
+.title #source {
+    font-size: 16px;
+    font-weight: bold;
+    color: gray;
+}
+
+.summary {
+    margin-top: 1rem;
+}
+
+.summary > p {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
 }

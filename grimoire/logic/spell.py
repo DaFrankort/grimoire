@@ -59,6 +59,10 @@ class Spell(DNDEntry):
             return 0
         return int(self.level.replace("Level", "").strip())
 
+    @property
+    def subtitle(self) -> str:
+        return f"{self.level} {self.school}"
+
 
 class SpellList(DNDEntryList[Spell]):
     type = Spell
