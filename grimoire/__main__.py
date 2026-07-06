@@ -13,7 +13,10 @@ TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 class ToolAPI:  # type: ignore
 
     def fetch_spells(self) -> list[dict[str, str | int | None]]:
-        return [s.json for s in SPELLS.entries]
+        return sorted(
+            (s.json for s in SPELLS.entries),
+            key=lambda spell: (spell["level"], spell["name"]),
+        )
 
     def _markdown_to_html(self, text: str) -> str:
         text = re.sub(r"\*\*\*(.*?)\*\*\*", r"<strong><em>\1</em></strong>", text)
