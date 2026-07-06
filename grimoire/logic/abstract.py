@@ -1,10 +1,10 @@
 import abc
 import dataclasses
-from enum import Enum
 import io
 import json
 import os
 from collections.abc import Iterable, Sequence
+from enum import Enum
 from typing import Any, Generic, Literal, TypedDict, TypeVar
 
 import rich
