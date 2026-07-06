@@ -1,5 +1,6 @@
 import abc
 import dataclasses
+from enum import Enum
 import io
 import json
 import os
@@ -12,8 +13,6 @@ from rapidfuzz import fuzz
 from rich.console import Console
 from rich.table import Table
 
-from methods import ChoicedEnum
-
 BASE_DATA_PATHS = ["./submodules/lenny-dnd-data/generated/official/", "./submodules/lenny-dnd-data/generated/partnered/"]
 
 
@@ -23,7 +22,7 @@ class ProficiencyOptions:
     amount: int | Literal["all"]
 
 
-class DNDEntryType(str, ChoicedEnum):
+class DNDEntryType(str, Enum):
     ACTION = "action"
     BACKGROUND = "background"
     CLASS = "class"
