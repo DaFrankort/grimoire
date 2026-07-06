@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #f4f4f9;
+        }
+
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>My Tool Dashboard</h2>
+    <input type="text" id="username" placeholder="Enter your name">
+    <button onclick="callPython()">Send to Python</button>
+    <p id="output"></p>
+
+    <script>
+        function callPython() {
+            const name = document.getElementById('username').value;
+            // Wait for pywebview to load, then call the API class method
+            window.pywebview.api.greet_user(name).then(response => {
+                document.getElementById('output').innerText = response;
+            });
+        }
+    </script>
+</body>
+
+</html>

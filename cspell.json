@@ -3,7 +3,13 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": ["TDND"],
+  "words": [
+    "Grimoire",
+    "numpy",
+    "pyinstaller",
+    "pywebview",
+    "TDND"
+  ],
   "ignoreWords": [],
   "import": []
 }
