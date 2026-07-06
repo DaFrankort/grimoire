@@ -118,7 +118,7 @@ def fuzzy_matches_list(
         result = fuzzy_matches(query, value, fuzzy_threshold, match_if_empty)
         if result is not None:
             results.append(result)
-    results.sort(key=lambda x: (-x.starts_with, -x.score, x.choice.name))
+    results.sort(key=lambda x: (-x.starts_with, -x.score, x.choice))
     return results
 
 
@@ -253,7 +253,7 @@ class DNDEntryList(abc.ABC, Generic[TDND]):
                 seen_names.add(e.name)
 
         # Sort by query match => fuzzy score => alphabetically
-        choices.sort(key=lambda x: (-x.starts_with, -x.score, x.choice.name))
+        choices.sort(key=lambda x: (-x.starts_with, -x.score, x.choice))
         return [choice.choice for choice in choices[:limit]]
 
     def search(self, query: str, allowed_sources: set[str], fuzzy_threshold: float = 75) -> list[DNDEntry]:
@@ -328,4 +328,3 @@ def build_table_from_rows(
 ) -> str:
     table = DescriptionTableTable({"type": "table", "title": "", "headers": headers, "rows": rows})
     return build_table(table, width, show_lines, align_right=align_right)
-
