@@ -16,6 +16,7 @@ class Spell(DNDEntry):
     classes: list[Any]
 
     def __init__(self, obj: dict[str, Any]):
+        super().__init__(obj)
         self.entry_type = "spell"
 
         self.name = obj["name"]
@@ -50,6 +51,13 @@ class Spell(DNDEntry):
     @property
     def level_school(self) -> str:
         return f"{self.level} {self.school}"
+
+    @property
+    def level_int(self) -> int:
+        """Returns the level as an integer."""
+        if self.level == "Cantrip":
+            return 0
+        return int(self.level.replace("Level", "").strip())
 
 
 class SpellList(DNDEntryList[Spell]):

@@ -113,14 +113,21 @@ class DNDEntry(abc.ABC):
     source: str
     url: str | None
     select_description: str | None = None  # Description in dropdown menus
+    _json: dict[str, Any]
 
     @abc.abstractmethod
     def __init__(self, obj: dict[str, Any]) -> None:
+        self._json = obj
         pass
 
     @property
     def title(self) -> str:
         return f"{self.name} ({self.source})"
+
+    @property
+    def json(self) -> dict[str, Any]:
+        """Returns the raw JSON data this entry was constructed from."""
+        return self._json
 
 
 TDND = TypeVar("TDND", bound=DNDEntry)  # pylint: disable=invalid-name
@@ -160,8 +167,9 @@ class DNDEntryList(abc.ABC, Generic[TDND]):
         fuzzy: list[TDND] = []
 
         for entry in self.entries:
-            if entry.source not in allowed_sources:
-                continue
+            # TODO Fix source filtering
+            # if entry.source not in allowed_sources:
+            #     continue
 
             entry_name = entry.name.strip().lower()
             if entry_name == query:

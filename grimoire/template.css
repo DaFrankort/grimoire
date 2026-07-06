@@ -1,0 +1,16 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #faf6ee;
+}
+
+.title {
+    color: #800000;
+    text-transform: uppercase;
+}
+
+.meta {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #d2b48c;
+}

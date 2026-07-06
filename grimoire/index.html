@@ -1,47 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
-    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <h3>Available Spells</h3>
-    <button onclick="getSpells()">Load Spells</button>
-    <table id="spell-table" style="display: none; margin-top: 15px;">
-        <thead>
-            <tr>
-                <th>Spell</th>
-                <th>Source</th>
-                <th>Level</th>
-                <th>School</th>
-            </tr>
-        </thead>
-        <tbody id="spell-list"></tbody>
-    </table>
-    <script>
-        function getSpells() {
-            const tbody = document.getElementById('spell-list');
-            const table = document.getElementById('spell-table');
+  <h3>Available Spells</h3>
+  <button onclick="getSpells()">Load Spells</button>
+  <table id="spell-table" style="display: none; margin-top: 15px">
+    <thead>
+      <tr>
+        <th>Spell</th>
+        <th>Source</th>
+        <th>Level</th>
+        <th>School</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="spell-list"></tbody>
+  </table>
+  <script>
+    function downloadPdf(name, source) {
+      window.pywebview.api.export_spell_pdf(name, source).then(message => {
+        alert(message); // Let the user know it worked
+      });
+    }
 
-            tbody.innerHTML = "";
-            window.pywebview.api.fetch_spells().then(spells => {
-                spells.forEach(spell => {
-                    const row = document.createElement('tr');
-                    name = spell.name
-                    if (spell.url) name = `<a href="${spell.url}" target="_blank" rel="noopener noreferrer">${spell.name}</a>`
-                    row.innerHTML = `
+    function getSpells() {
+      const tbody = document.getElementById("spell-list");
+      const table = document.getElementById("spell-table");
+
+      tbody.innerHTML = "";
+      window.pywebview.api.fetch_spells().then((spells) => {
+        spells.forEach((spell) => {
+          const row = document.createElement("tr");
+          name = spell.name;
+          if (spell.url) name = `<a href="${spell.url}" target="_blank" rel="noopener noreferrer">${spell.name}</a>`;
+          row.innerHTML = `
                             <td>${name}</td>
                             <td>${spell.source}</td>
                             <td>${spell.level}</td>
                             <td>${spell.school}</td>
+                            <td>
+                                <button class="btn-pdf" onclick="downloadPdf('${spell.name.replace(/'/g, "\\'")}', '${spell.source}')">PDF</button>
+                            </td>
                         `;
-                    tbody.appendChild(row);
-                });
-                table.style.display = "table";
-            });
-        }
-    </script>
+          tbody.appendChild(row);
+        });
+        table.style.display = "table";
+      });
+    }
+  </script>
 </body>
 
 </html>
