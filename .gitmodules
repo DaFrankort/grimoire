@@ -1,0 +1,3 @@
+[submodule "submodules/lenny-dnd-data"]
+	path = submodules/lenny-dnd-data
+	url = https://github.com/pipieter/lenny-dnd-data

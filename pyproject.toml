@@ -1,0 +1,12 @@
+[tool.isort]
+profile = "black"
+src_paths = ["grimoire"]
+
+[tool.black]
+line-length = 128
+
+[tool.pyright]
+include = ["grimoire"]
+exclude = ["**/__pycache__"]
+extraPaths = ["grimoire"]
+typeCheckingMode = "strict"
