@@ -6,17 +6,39 @@
 </head>
 
 <body>
-    <h2>My Tool Dashboard</h2>
-    <input type="text" id="username" placeholder="Enter your name">
-    <button onclick="callPython()">Send to Python</button>
-    <p id="output"></p>
-
+    <h3>Available Spells</h3>
+    <button onclick="getSpells()">Load Spells</button>
+    <table id="spell-table" style="display: none; margin-top: 15px;">
+        <thead>
+            <tr>
+                <th>Spell</th>
+                <th>Source</th>
+                <th>Level</th>
+                <th>School</th>
+            </tr>
+        </thead>
+        <tbody id="spell-list"></tbody>
+    </table>
     <script>
-        function callPython() {
-            const name = document.getElementById('username').value;
-            // Wait for pywebview to load, then call the API class method
-            window.pywebview.api.greet_user(name).then(response => {
-                document.getElementById('output').innerText = response;
+        function getSpells() {
+            const tbody = document.getElementById('spell-list');
+            const table = document.getElementById('spell-table');
+
+            tbody.innerHTML = "";
+            window.pywebview.api.fetch_spells().then(spells => {
+                spells.forEach(spell => {
+                    const row = document.createElement('tr');
+                    name = spell.name
+                    if (spell.url) name = `<a href="${spell.url}" target="_blank" rel="noopener noreferrer">${spell.name}</a>`
+                    row.innerHTML = `
+                            <td>${name}</td>
+                            <td>${spell.source}</td>
+                            <td>${spell.level}</td>
+                            <td>${spell.school}</td>
+                        `;
+                    tbody.appendChild(row);
+                });
+                table.style.display = "table";
             });
         }
     </script>

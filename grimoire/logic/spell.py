@@ -1,6 +1,6 @@
 from typing import Any
 
-from logic.abstract import Description, DNDEntry, DNDEntryList, DNDEntryType
+from logic.dnd_abstract import Description, DNDEntry, DNDEntryList
 
 
 class Spell(DNDEntry):
@@ -16,7 +16,7 @@ class Spell(DNDEntry):
     classes: list[Any]
 
     def __init__(self, obj: dict[str, Any]):
-        self.entry_type = DNDEntryType.SPELL
+        self.entry_type = "spell"
 
         self.name = obj["name"]
         self.source = obj["source"]

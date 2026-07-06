@@ -4,7 +4,6 @@ import io
 import json
 import os
 from collections.abc import Iterable, Sequence
-from enum import Enum
 from typing import Any, Generic, Literal, TypedDict, TypeVar
 
 import rich
@@ -13,60 +12,7 @@ from rapidfuzz import fuzz
 from rich.console import Console
 from rich.table import Table
 
-BASE_DATA_PATHS = ["./submodules/lenny-dnd-data/generated/official/", "./submodules/lenny-dnd-data/generated/partnered/"]
-
-
-@dataclasses.dataclass
-class ProficiencyOptions:
-    options: list[str] | Literal["any"]
-    amount: int | Literal["all"]
-
-
-class DNDEntryType(str, Enum):
-    ACTION = "action"
-    BACKGROUND = "background"
-    CLASS = "class"
-    CONDITION = "condition"
-    CREATURE = "creature"
-    DEITY = "deity"
-    FEAT = "feat"
-    HAZARD = "hazard"
-    ITEM = "item"
-    LANGUAGE = "language"
-    OBJECT = "object"
-    RULE = "rule"
-    SPECIES = "species"
-    SPELL = "spell"
-    TABLE = "table"
-    VEHICLE = "vehicle"
-    CULT = "cult"
-    BOON = "boon"
-    SKILL = "skill"
-
-    @property
-    def emoji(self) -> str:
-        emojis = {
-            self.ACTION: "🏃",
-            self.BACKGROUND: "📕",
-            self.CLASS: "🧙‍♂️",
-            self.CONDITION: "🤒",
-            self.CREATURE: "🐉",
-            self.DEITY: "👁️",
-            self.FEAT: "🎖️",
-            self.HAZARD: "🪤",
-            self.ITEM: "🗡️",
-            self.LANGUAGE: "💬",
-            self.OBJECT: "🪨",
-            self.RULE: "📜",
-            self.SPECIES: "🧝",
-            self.SPELL: "🔥",
-            self.TABLE: "📊",
-            self.VEHICLE: "⛵",
-            self.CULT: "🕯️",
-            self.BOON: "🎁",
-            self.SKILL: "🎯",
-        }
-        return emojis.get(self, "❓")
+BASE_DATA_PATHS = ["./lenny-dnd-data/generated/official/", "./lenny-dnd-data/generated/partnered/"]
 
 
 @dataclasses.dataclass
@@ -162,7 +108,7 @@ Description = DescriptionTable | DescriptionText | DescriptionList
 
 
 class DNDEntry(abc.ABC):
-    entry_type: DNDEntryType
+    entry_type: str
     name: str
     source: str
     url: str | None
