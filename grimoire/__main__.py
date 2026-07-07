@@ -2,7 +2,7 @@ import os
 
 import webview
 
-from python.api import API
+from api import API
 
 if __name__ == "__main__":
     api = API()
