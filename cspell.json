@@ -5,6 +5,8 @@
   "dictionaries": [],
   "words": [
     "Grimoire",
+    "noopener",
+    "noreferrer",
     "numpy",
     "pyinstaller",
     "pywebview",

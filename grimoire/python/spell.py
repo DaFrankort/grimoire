@@ -1,6 +1,6 @@
 from typing import Any
 
-from logic.dnd_abstract import Description, DNDEntry, DNDEntryList
+from python.dnd_abstract import Description, DNDEntry, DNDEntryList
 
 
 class Spell(DNDEntry):
@@ -67,6 +67,13 @@ class Spell(DNDEntry):
 class SpellList(DNDEntryList[Spell]):
     type = Spell
     paths = ["spells.json"]
+
+
+def get_spell(name: str, source: str) -> Spell | None:
+    spell = [s for s in SPELLS.get(name, allowed_sources={source}) if s.source == source]
+    if len(spell) == 0:
+        return None
+    return spell[0]
 
 
 SPELLS = SpellList()
