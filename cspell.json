@@ -13,7 +13,8 @@
     "pywebviewready",
     "spellbook",
     "TDND",
-    "venv"
+    "venv",
+    "Weasy"
   ],
   "ignoreWords": [],
   "import": []

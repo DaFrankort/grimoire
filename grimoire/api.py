@@ -1,7 +1,7 @@
 import os
 from typing import Any
 
-from xhtml2pdf import pisa  # type: ignore
+from weasyprint import HTML  # type: ignore
 
 from python.methods import description_to_html, markdown_to_html
 from python.spell import SPELLS, Spell, get_spell
@@ -9,7 +9,7 @@ from python.spell import SPELLS, Spell, get_spell
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 
 
-class API:  # type: ignore
+class API:
     selected: set[Spell] = set()
 
     def fetch(self) -> list[dict[str, str | int | None]]:
@@ -52,17 +52,16 @@ class API:  # type: ignore
             description=markdown_to_html(description),
         )
 
-        name = spell.name.lower().replace(" ", "_")
-        filename = f"{spell.source}_{name}.pdf"
+        formatted_name = spell.name.lower().replace(" ", "_")
+        filename = f"{spell.source}_{formatted_name}.pdf"
         output_path = f"generated/{filename}"
         os.makedirs("generated", exist_ok=True)
-
         base_path = os.path.dirname(TEMPLATE_PATH)
-        with open(output_path, "wb") as pdf_file:
-            pisa_status = pisa.CreatePDF(filled_html, dest=pdf_file, path=base_path)  # type: ignore
 
-        if pisa_status.err:  # type: ignore
-            return f"{name} {source} - Error generating PDF layout."
+        try:
+            HTML(string=filled_html, base_url=base_path).write_pdf(output_path)  # type: ignore
+        except Exception as e:
+            return f"{formatted_name} {source} - Error generating PDF layout: {e}"
 
         print(f"Generated {filename}")
         return f"Created {filename} successfully!"
