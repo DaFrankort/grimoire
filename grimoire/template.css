@@ -3,15 +3,47 @@
     margin: 1rem 2rem;
 }
 
+@font-face {
+    font-family: BlackadderITC;
+    src: url("../assets/fonts/blackadderitc_regular.ttf");
+}
+
+@font-face {
+    font-family: CaslonAntique;
+    src: url("../assets/fonts/CaslonAntique.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: CaslonAntique;
+    src: url("../assets/fonts/CaslonAntique-Bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: CaslonAntique;
+    src: url("../assets/fonts/CaslonAntique-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: CaslonAntique;
+    src: url("../assets/fonts/CaslonAntique-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: CaslonAntique !important;
     font-size: 20px;
     padding: 20px;
     margin: 0;
 }
 
 h1 {
-    text-transform: uppercase;
     font-size: 48px;
     font-weight: bold;
     margin: 0;
@@ -19,16 +51,17 @@ h1 {
 
 h2 {
     margin-top: 0;
-    font-weight: 100;
+    font-weight: normal;
     font-size: 20px;
 }
 
 p {
+    font-family: CaslonAntique !important;
     margin: 0;
 }
 
 h1, h2, h3 {
-    font-family: fantasy;
+    font-family: BlackadderITC;
 }
 
 .title{
@@ -41,6 +74,7 @@ h1, h2, h3 {
     font-size: 16px;
     font-weight: bold;
     color: gray;
+    padding-left: 0.4rem;
 }
 
 .summary {
