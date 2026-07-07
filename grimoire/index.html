@@ -6,39 +6,45 @@
 </head>
 
 <body>
-  <h3>Available Spells</h3>
-  <button onclick="getSpells()">Load Spells</button>
-  <table id="selected-spell-table">
-    <thead>
-      <tr>
-        <th>Spell</th>
-        <th>Source</th>
-        <th>Level</th>
-        <th>School</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="selected-spells"></tbody>
-  </table>
+  <div class="selected">
+    <h3>Selected Spells</h3>
+    <button onclick="exportAll()" class="btn-pdf" >Selected to PDF</button>
+    <table id="selected-table">
+      <thead>
+        <tr>
+          <th>Spell</th>
+          <th>Source</th>
+          <th>Level</th>
+          <th>School</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="selected-table-list"></tbody>
+    </table>
+  </div>
 
   <br>
 
-  <table id="spell-table" style="display: none; margin-top: 15px">
-    <thead>
-      <tr>
-        <th>Spell</th>
-        <th>Source</th>
-        <th>Level</th>
-        <th>School</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="spell-list"></tbody>
-  </table>
+  <div class="spells">
+    <h3>Available Spells</h3>
+    <button onclick="getSpells()">Load Spells</button>
+    <table id="spells-table" style="display: none; margin-top: 15px">
+      <thead>
+        <tr>
+          <th>Spell</th>
+          <th>Source</th>
+          <th>Level</th>
+          <th>School</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="spells-table-list"></tbody>
+    </table>
+  </div>
   <script>
     function updateSelectedSpells(spells) {
-      const tbody = document.getElementById("selected-spells");
-      const table = document.getElementById("selected-spell-table");
+      const tbody = document.getElementById("selected-table-list");
+      const table = document.getElementById("selected-table");
       tbody.innerHTML = "";
 
       spells.forEach((spell) => {
@@ -58,29 +64,36 @@
         tbody.appendChild(row);
       });
       table.style.display = "table";
+      getSpells();
+    }
+
+    function exportAll() {
+      window.pywebview.api.export_selected_to_pdf().then(message => {
+        alert(message);
+      });
     }
 
     function downloadPdf(name, source) {
       window.pywebview.api.export_spell_pdf(name, source).then(message => {
-        alert(message); // Let the user know it worked
+        alert(message);
       });
     }
 
     function selectSpell(name, source) {
       window.pywebview.api.select_spell(name, source).then(selected => {
-        updateSelectedSpells(selected)
+        updateSelectedSpells(selected);
       })
     }
 
     function deselectSpell(name, source) {
-        window.pywebview.api.deselect_spell(name, source).then(selected => {
-          updateSelectedSpells(selected)
-        })
-      }
+      window.pywebview.api.deselect_spell(name, source).then(selected => {
+        updateSelectedSpells(selected);
+      })
+    }
 
     function getSpells() {
-      const tbody = document.getElementById("spell-list");
-      const table = document.getElementById("spell-table");
+      const tbody = document.getElementById("spells-table-list");
+      const table = document.getElementById("spells-table");
 
       tbody.innerHTML = "";
       window.pywebview.api.fetch_spells().then((spells) => {

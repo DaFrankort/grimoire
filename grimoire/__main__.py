@@ -16,7 +16,7 @@ class ToolAPI:  # type: ignore
 
     def fetch_spells(self) -> list[dict[str, str | int | None]]:
         return sorted(
-            (s.json for s in SPELLS.entries),
+            (s.json for s in SPELLS.entries if s not in self.selected),
             key=lambda spell: (spell["level"], spell["name"]),
         )
 
@@ -121,7 +121,7 @@ class ToolAPI:  # type: ignore
     def export_spell_pdf(self, name: str, source: str):
         spell = self._get_spell(name, source)
         if spell is None:
-            return f"Could not find Spell {name} {source}"
+            return f"{name} {source} - Could not find Spell"
 
         with open(TEMPLATE_PATH, "r", encoding="utf-8") as file:
             template_content = file.read()
@@ -147,10 +147,18 @@ class ToolAPI:  # type: ignore
             pisa_status = pisa.CreatePDF(filled_html, dest=pdf_file, path=base_path)  # type: ignore
 
         if pisa_status.err:  # type: ignore
-            return "Error generating PDF layout."
+            return f"{name} {source} - Error generating PDF layout."
 
         print(f"- Generated {filename}")
         return f"Created {filename} successfully!"
+
+    def export_selected_to_pdf(self) -> str:
+        # TODO Generate 1 full PDF, rather than x separate ones.
+        summary: list[str] = []
+        for spell in self.selected:
+            result = self.export_spell_pdf(spell.name, spell.source)
+            summary.append(result)
+        return "\n".join(summary)
 
 
 if __name__ == "__main__":
