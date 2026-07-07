@@ -8,7 +8,7 @@
 <body>
   <div class="selected">
     <h3>Selected Spells</h3>
-    <button onclick="exportAll()" class="btn-pdf" >Selected to PDF</button>
+    <button onclick="exportAll()" class="btn-pdf">Selected to PDF</button>
     <table id="selected-table">
       <thead>
         <tr>
@@ -27,7 +27,11 @@
 
   <div class="spells">
     <h3>Available Spells</h3>
-    <button onclick="getSpells()">Load Spells</button>
+    <!--<button onclick="getSpells()">Load Spells</button>-->
+    <div class="search-container">
+      <input type="text" id="spell-search" class="search-bar" placeholder="Search spells by name..."
+        oninput="filterSpells()">
+    </div>
     <table id="spells-table" style="display: none; margin-top: 15px">
       <thead>
         <tr>
@@ -114,10 +118,27 @@
           tbody.appendChild(row);
         });
         table.style.display = "table";
+        filterSpells();
       });
     }
 
-    getSpells()
+    function filterSpells() {
+      const query = document.getElementById("spell-search").value.toLowerCase();
+      const rows = document.querySelectorAll("#spells-table-list tr");
+
+      rows.forEach(row => {
+        const spellName = row.cells[0].textContent.toLowerCase();
+        if (spellName.includes(query)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    window.addEventListener('pywebviewready', () => {
+      getSpells();
+    });
   </script>
 </body>
 
