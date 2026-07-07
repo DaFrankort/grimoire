@@ -9,6 +9,8 @@ on:
       - ".env.example"
       - "./.github/**"
       - "cspell.json"
+      - "**/*.html"
+      - "**/*.css"
   workflow_dispatch:
 
 jobs:

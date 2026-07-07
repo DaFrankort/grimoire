@@ -7,8 +7,10 @@ on:
       - "readme.md"
   pull_request:
     paths:
-      - "readme.md"
+      - "README.md"
       - "**/*.py"
+      - "**/*.html"
+      - "**/*.css"
       - "cspell.json"
   workflow_dispatch:
 
