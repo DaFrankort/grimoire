@@ -1,4 +1,4 @@
 RapidFuzz==3.14.5
 rich==15.0.0
 pywebview==6.2.1
-xhtml2pdf==0.2.1
+weasyprint==69.0
