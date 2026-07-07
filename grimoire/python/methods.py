@@ -1,6 +1,6 @@
 import re
 
-from logic.dnd_abstract import Description
+from python.dnd_abstract import Description
 
 
 def markdown_to_html(text: str) -> str:

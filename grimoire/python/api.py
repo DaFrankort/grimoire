@@ -3,8 +3,8 @@ from typing import Any
 
 from xhtml2pdf import pisa  # type: ignore
 
-from logic.methods import description_to_html, markdown_to_html
-from logic.spell import SPELLS, Spell, get_spell
+from python.methods import description_to_html, markdown_to_html
+from python.spell import SPELLS, Spell, get_spell
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 

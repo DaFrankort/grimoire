@@ -1,6 +1,6 @@
 from typing import Any
 
-from logic.dnd_abstract import Description, DNDEntry, DNDEntryList
+from python.dnd_abstract import Description, DNDEntry, DNDEntryList
 
 
 class Spell(DNDEntry):
