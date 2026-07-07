@@ -9,6 +9,11 @@
 }
 
 @font-face {
+    font-family: Thesignature;
+    src: url("../assets/fonts/Thesignature.ttf");
+}
+
+@font-face {
     font-family: CaslonAntique;
     src: url("../assets/fonts/CaslonAntique.ttf");
     font-weight: normal;
@@ -38,7 +43,7 @@
 
 body {
     font-family: CaslonAntique !important;
-    font-size: 20px;
+    font-size: 16px;
     padding: 20px;
     margin: 0;
 }
@@ -66,22 +71,55 @@ h1, h2, h3 {
 
 .title{
     display: flex;
-    margin-top: 4rem;
-    margin-bottom: 1rem;
+    align-items: baseline;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
 }
 
-.title #source {
-    font-size: 16px;
-    font-weight: bold;
-    color: gray;
-    padding-left: 0.4rem;
+/* .vocal-component {
+    font-family: Thesignature !important;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: rgb(109, 109, 109);
+    rotate: -8deg;
+    transform: translateX(-3.4rem) translateY(1.8rem);
+} */
+
+.vocal-component {
+    font-family: Thesignature !important;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: rgb(109, 109, 109);
+    transform: translateX(1rem) translateY(-1rem) rotate(-8deg);
+}
+
+.subtitle {
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .summary {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
 }
 
 .summary > p {
     margin-top: 0.2rem;
     margin-bottom: 0.2rem;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+footer {
+    bottom: 1rem;
+    right: 1rem;
+    position: absolute;
+    font-style: italic;
+    color: gray;
+    font-size: 0.6rem;
 }

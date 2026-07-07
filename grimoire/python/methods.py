@@ -1,6 +1,7 @@
 import re
 
 from python.dnd_abstract import Description
+from googletrans import Translator  # type: ignore
 
 
 def markdown_to_html(text: str) -> str:
@@ -74,3 +75,9 @@ def description_to_html(description: list[Description]) -> str:
 
     html = "".join(html_chunks)
     return html
+
+
+async def english_to_latin(text: str) -> str:
+    async with Translator() as translator:
+        result = await translator.translate(text, src="en", dest="la")
+        return result.text

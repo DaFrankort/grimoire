@@ -1,9 +1,10 @@
+import asyncio
 import os
 from typing import Any
 
 from weasyprint import HTML  # type: ignore
 
-from python.methods import description_to_html, markdown_to_html
+from python.methods import description_to_html, english_to_latin, markdown_to_html
 from python.spell import SPELLS, Spell, get_spell
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
@@ -41,10 +42,17 @@ class API:
             template_content = file.read()
 
         description = description_to_html(spell.description)
+        vocal_component = ""
+        if "V" in spell.components:
+            vocal_component = asyncio.run(english_to_latin(spell.name))
+            if spell.level == "Cantrip":
+                vocal_component = vocal_component.split(" ")[0]
+
         filled_html = template_content.format(
             name=spell.name,
             source=spell.source,
             subtitle=spell.subtitle,
+            vocal=vocal_component,
             casting=spell.casting_time,
             range=spell.spell_range,
             components=spell.components,
@@ -57,6 +65,11 @@ class API:
         output_path = f"generated/{filename}"
         os.makedirs("generated", exist_ok=True)
         base_path = os.path.dirname(TEMPLATE_PATH)
+
+        if True:  # Debugging
+            debug_path = os.path.join(os.path.dirname(__file__), "_debug.html")
+            with open(debug_path, "w", encoding="utf-8") as debug_file:
+                debug_file.write(filled_html)
 
         try:
             HTML(string=filled_html, base_url=base_path).write_pdf(output_path)  # type: ignore

@@ -9,9 +9,13 @@
 <body>
     <div class="title">
         <h1 id="name">{name}</h1>
-        <p id="source">{source}</p>
+        
     </div>
-    <p>{subtitle}</p>
+    <div class="subtitle">
+        <p>{subtitle}</p>
+        <p class="vocal-component">{vocal}</p>
+    </div>
+    
     <div class="summary">
         <p><b>Casting Time:</b> {casting}</p>
         <p><b>Range:</b> {range}</p>
@@ -19,7 +23,8 @@
         <p><b>Duration:</b> {duration}</p>
     </div>
     <hr>
-    <div>{description}</div>
+    <div class="description">{description}</div>
+    <footer>{source}</footer>
 </body>
 
 </html>
