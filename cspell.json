@@ -8,7 +8,10 @@
     "numpy",
     "pyinstaller",
     "pywebview",
-    "TDND"
+    "pywebviewready",
+    "spellbook",
+    "TDND",
+    "venv"
   ],
   "ignoreWords": [],
   "import": []
