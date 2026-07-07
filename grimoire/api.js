@@ -41,6 +41,7 @@ function _renderSpellTable(tbodyId, tableId, spells, isSelected) {
 
 function updateSelectedSpells(spells) {
   _renderSpellTable("selected-table-list", "selected-table", spells, true);
+  getSpells();
 }
 
 function getSpells() {

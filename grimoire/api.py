@@ -13,10 +13,12 @@ class API:  # type: ignore
     selected: set[Spell] = set()
 
     def fetch(self) -> list[dict[str, str | int | None]]:
-        return sorted(
+        spells = sorted(
             (s.json for s in SPELLS.entries if s not in self.selected),
             key=lambda spell: (spell["level"], spell["name"]),
         )
+        print(f"Loaded {len(spells)} spells.")
+        return spells
 
     def select(self, name: str, source: str) -> list[dict[str, Any]]:
         spell = get_spell(name, source)
@@ -62,7 +64,7 @@ class API:  # type: ignore
         if pisa_status.err:  # type: ignore
             return f"{name} {source} - Error generating PDF layout."
 
-        print(f"- Generated {filename}")
+        print(f"Generated {filename}")
         return f"Created {filename} successfully!"
 
     def export_selected_to_pdf(self) -> str:
