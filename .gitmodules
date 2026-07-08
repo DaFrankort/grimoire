@@ -1,3 +1,6 @@
-[submodule "lenny-dnd-data"]
-	path = lenny-dnd-data
-	url = https://github.com/pipieter/lenny-dnd-data
+[submodule "submodules/5e-src"]
+	path = submodules/5e-src
+	url = https://github.com/5etools-mirror-3/5etools-src
+[submodule "submodules/5e-homebrew"]
+	path = submodules/5e-homebrew
+	url = https://github.com/DaFrankort/homebrew-light
