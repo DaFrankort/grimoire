@@ -1788,13 +1788,13 @@
                 {
                     "type": "table",
                     "caption": "Reality Break Effects",
-                    "colLabels": [
-                        "d10",
-                        "Effect"
-                    ],
                     "colStyles": [
                         "col-2 text-center",
                         "col-10"
+                    ],
+                    "colLabels": [
+                        "d10",
+                        "Effect"
                     ],
                     "rows": [
                         [
@@ -2500,13 +2500,13 @@
                 {
                     "type": "table",
                     "caption": "Mischievous Surge",
-                    "colLabels": [
-                        "d4",
-                        "Effect"
-                    ],
                     "colStyles": [
                         "col-2 text-center",
                         "col-10"
+                    ],
+                    "colLabels": [
+                        "d4",
+                        "Effect"
                     ],
                     "rows": [
                         [
@@ -4095,6 +4095,7 @@
                         "The number of secondary casters determines the spell's area of effect and duration, as shown in the table below. The spell ends early if any caster who participated in this casting contributes to another casting of Spellfire Storm as a Circle spell.",
                         {
                             "type": "table",
+                            "caption": "",
                             "colStyles": [
                                 "col-2 text-center",
                                 "col-8",
@@ -4709,6 +4710,7 @@
                 "You conjure a two-story tower made of stone, wood, or similar suitably sturdy materials. The tower can be round or square in shape. Each level of the tower is 10 feet tall and has an area of up to 100 square feet. Access between levels consists of a simple ladder and hatch. Each level takes one of the following forms, chosen by you when you cast the spell:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "A bedroom with a bed, chairs, chest, and magical fireplace",
                         "A study with desks, books, bookshelves, parchments, ink, and ink pens",
@@ -5465,14 +5467,6 @@
                 {
                     "type": "table",
                     "caption": "Animated Object Statistics",
-                    "colLabels": [
-                        "Size",
-                        "HP",
-                        "AC",
-                        "Attack",
-                        "Str",
-                        "Dex"
-                    ],
                     "colStyles": [
                         "col-2",
                         "col-1 text-center",
@@ -5480,6 +5474,14 @@
                         "col-6",
                         "col-1 text-center",
                         "col-1 text-center"
+                    ],
+                    "colLabels": [
+                        "Size",
+                        "HP",
+                        "AC",
+                        "Attack",
+                        "Str",
+                        "Dex"
                     ],
                     "rows": [
                         [
@@ -6372,6 +6374,7 @@
                 "By casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Weal, for good results",
                         "Woe, for bad results",
@@ -7166,6 +7169,7 @@
                 "You touch a creature, and that creature must succeed on a Wisdom saving throw or become cursed for the duration of the spell. When you cast this spell, choose the nature of the curse from the following options:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Choose one ability score. While cursed, the target has disadvantage on ability checks and saving throws made with that ability score.",
                         "While cursed, the target has disadvantage on attack rolls against you.",
@@ -9380,6 +9384,7 @@
                 "You instantly gain knowledge of up to three facts of your choice about any of the following subjects as they relate to the area:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "terrain and bodies of water",
                         "prevalent plants, minerals, animals, or peoples",
@@ -9777,13 +9782,13 @@
                 {
                     "type": "table",
                     "caption": "Confusion Behavior",
-                    "colLabels": [
-                        "{@dice d10}",
-                        "Behavior"
-                    ],
                     "colStyles": [
                         "col-1 text-center",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "{@dice d10}",
+                        "Behavior"
                     ],
                     "rows": [
                         [
@@ -9909,6 +9914,7 @@
                 "You summon fey spirits that take the form of beasts and appear in unoccupied spaces that you can see within range. Choose one of the following options for what appears:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "One {@filter beast of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=beast|miscellaneous=!swarm}",
                         "Two {@filter beasts of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=beast|miscellaneous=!swarm}",
@@ -10289,6 +10295,7 @@
                 "You summon elementals that appear in unoccupied spaces that you can see within range. You choose one of the following options for what appears:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "One {@filter elemental of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=elemental|miscellaneous=!swarm}",
                         "Two {@filter elementals of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=elemental|miscellaneous=!swarm}",
@@ -10436,6 +10443,7 @@
                 "You summon fey creatures that appear in unoccupied spaces that you can see within range. Choose one of the following options for what appears:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "One {@filter fey creature of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=fey|miscellaneous=!swarm}",
                         "Two {@filter fey creatures of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=fey|miscellaneous=!swarm}",
@@ -10987,13 +10995,13 @@
                 {
                     "type": "table",
                     "caption": "Precipitation",
-                    "colLabels": [
-                        "Stage",
-                        "Condition"
-                    ],
                     "colStyles": [
                         "col-1 text-center",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "Stage",
+                        "Condition"
                     ],
                     "rows": [
                         [
@@ -11021,13 +11029,13 @@
                 {
                     "type": "table",
                     "caption": "Temperature",
-                    "colLabels": [
-                        "Stage",
-                        "Condition"
-                    ],
                     "colStyles": [
                         "col-1 text-center",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "Stage",
+                        "Condition"
                     ],
                     "rows": [
                         [
@@ -11059,13 +11067,13 @@
                 {
                     "type": "table",
                     "caption": "Wind",
-                    "colLabels": [
-                        "Stage",
-                        "Condition"
-                    ],
                     "colStyles": [
                         "col-1 text-center",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "Stage",
+                        "Condition"
                     ],
                     "rows": [
                         [
@@ -11528,13 +11536,13 @@
                 {
                     "type": "table",
                     "caption": "Creation",
-                    "colLabels": [
-                        "Material",
-                        "Duration"
-                    ],
                     "colStyles": [
                         "col-8",
                         "col-4"
+                    ],
+                    "colLabels": [
+                        "Material",
+                        "Duration"
                     ],
                     "rows": [
                         [
@@ -13466,6 +13474,7 @@
                 "You utter a divine word, imbued with the power that shaped the world at the dawn of creation. Choose any number of creatures you can see within range. Each creature that can hear you must make a Charisma saving throw. On a failed save, a creature suffers an effect based on its current hit points:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "50 hit points or fewer: {@condition deafened} for 1 minute",
                         "40 hit points or fewer: {@condition deafened} and {@condition blinded} for 10 minutes",
@@ -13930,6 +13939,7 @@
                 "Whispering to the spirits of nature, you create one of the following effects within range:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb for clear skies, a cloud for rain, falling snowflakes for snow, and so on. This effect persists for 1 round.",
                         "You instantly make a flower blossom, a seed pod open, or a leaf bud bloom.",
@@ -14377,15 +14387,15 @@
                 "You cause a creature or an object you can see within range to grow larger or smaller for the duration. Choose either a creature or an object that is neither worn nor carried. If the target is unwilling, it can make a Constitution saving throw. On a success, the spell has no effect.",
                 "If the target is a creature, everything it is wearing and carrying changes size with it. Any item dropped by an affected creature returns to normal size at once.",
                 {
-                    "name": "Enlarge",
                     "type": "entries",
+                    "name": "Enlarge",
                     "entries": [
                         "The target's size doubles in all dimensions, and its weight is multiplied by eight. This growth increases its size by one category—from Medium to Large, for example. If there isn't enough room for the target to double its size, the creature or object attains the maximum possible size in the space available. Until the spell ends, the target also has advantage on Strength checks and Strength saving throws. The target's weapons also grow to match its new size. While these weapons are enlarged, the target's attacks with them deal {@damage 1d4} extra damage."
                     ]
                 },
                 {
-                    "name": "Reduce",
                     "type": "entries",
+                    "name": "Reduce",
                     "entries": [
                         "The target's size is halved in all dimensions, and its weight is reduced to one-eighth of normal. This reduction decreases its size by one category—from Medium to Small, for example. Until the spell ends, the target also has disadvantage on Strength checks and Strength saving throws. The target's weapons also shrink to match its new size. While these weapons are reduced, the target's attacks with them deal {@damage 1d4} less damage (this can't reduce the damage below 1)."
                     ]
@@ -18033,6 +18043,7 @@
                 "You imbue a creature you touch with positive energy to undo a debilitating effect. You can reduce the target's {@condition exhaustion} level by one, or end one of the following effects on the target:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "One effect that {@condition charmed} or {@condition petrified} the target",
                         "One curse, including the target's attunement to a cursed magic item",
@@ -18210,6 +18221,7 @@
                         "You can place your choice of one of the following magical effects within the warded area of the stronghold.",
                         {
                             "type": "list",
+                            "style": null,
                             "items": [
                                 "Place {@spell dancing lights} in four corridors. You can designate a simple program that the lights repeat as long as guards and wards lasts.",
                                 "Place {@spell magic mouth} in two locations.",
@@ -21981,6 +21993,7 @@
                 "Choose one or more of the following types of creatures: celestials, elementals, fey, fiends, or undead. The circle affects a creature of the chosen type in the following ways:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "The creature can't willingly enter the cylinder by nonmagical means. If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw.",
                         "The creature has disadvantage on attack rolls against targets within the cylinder.",
@@ -23993,6 +24006,7 @@
                 "When you cast the spell, you decide what sort of security the spell provides, choosing any or all of the following properties:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Sound can't pass through the barrier at the edge of the warded area.",
                         "The barrier of the warded area appears dark and foggy, preventing vision (including {@sense darkvision}) through it.",
@@ -25786,6 +25800,7 @@
                 "This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You create an instantaneous, harmless sensory effect, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor.",
                         "You instantaneously light or snuff out a candle, a torch, or a small campfire.",
@@ -27132,13 +27147,13 @@
                 {
                     "type": "table",
                     "caption": "Reincarnate Races",
-                    "colLabels": [
-                        "{@dice d100}",
-                        "Race"
-                    ],
                     "colStyles": [
                         "col-1 text-center no-wrap",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "{@dice d100}",
+                        "Race"
                     ],
                     "rows": [
                         [
@@ -28062,13 +28077,13 @@
                 {
                     "type": "table",
                     "caption": "Knowledge of Target",
-                    "colLabels": [
-                        "Knowledge",
-                        "Save Modifier"
-                    ],
                     "colStyles": [
                         "col-11",
                         "col-1 text-center"
+                    ],
+                    "colLabels": [
+                        "Knowledge",
+                        "Save Modifier"
                     ],
                     "rows": [
                         [
@@ -28088,13 +28103,13 @@
                 {
                     "type": "table",
                     "caption": "Connection to Target",
-                    "colLabels": [
-                        "Connection",
-                        "Save Modifier"
-                    ],
                     "colStyles": [
                         "col-11",
                         "col-1 text-center"
+                    ],
+                    "colLabels": [
+                        "Connection",
+                        "Save Modifier"
                     ],
                     "rows": [
                         [
@@ -31241,19 +31256,19 @@
                 {
                     "type": "table",
                     "caption": "Teleportation",
-                    "colLabels": [
-                        "Familiarity",
-                        "Mishap",
-                        "Similar Area",
-                        "Off Target",
-                        "On Target"
-                    ],
                     "colStyles": [
                         "col-8",
                         "col-1 text-center no-wrap",
                         "col-1 text-center no-wrap",
                         "col-1 text-center no-wrap",
                         "col-1 text-center no-wrap"
+                    ],
+                    "colLabels": [
+                        "Familiarity",
+                        "Mishap",
+                        "Similar Area",
+                        "Off Target",
+                        "On Target"
                     ],
                     "rows": [
                         [
@@ -31574,6 +31589,7 @@
                 "You manifest a minor wonder, a sign of supernatural power, within range. You create one of the following magical effects within range:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Your voice booms up to three times as loud as normal for 1 minute.",
                         "You cause flames to flicker, brighten, dim, or change color for 1 minute.",
@@ -33739,6 +33755,7 @@
                 "The basic use of this spell is to duplicate any other spell of 8th level or lower. You don't need to meet any requirements in that spell, including costly components. The spell simply takes effect. Alternatively, you can create one of the following effects of your choice:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You create one object of up to 25,000 gp in value that isn't a magic item. The object can be no more than 300 feet in any dimension, and it appears in an unoccupied space you can see on the ground.",
                         "You allow up to twenty creatures that you can see to regain all hit points, and you end all effects on them described in the {@spell greater restoration} spell.",
@@ -34293,6 +34310,7 @@
                 "You magically empower your movement with dance-like steps, giving yourself the following benefits for the duration.",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Your walking speed increases by 10 feet.",
                         "You don't provoke opportunity attacks.",
@@ -36095,6 +36113,7 @@
                 "Uttering an incantation, you draw on the magic of the Lower Planes or Upper Planes (your choice) to transform yourself. You gain the following benefits until the spell ends:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You are immune to fire and poison damage (Lower Planes) or radiant and necrotic damage (Upper Planes).",
                         "You are immune to the {@condition poisoned} condition (Lower Planes) or the {@condition charmed} condition (Upper Planes).",
@@ -36904,13 +36923,13 @@
                 {
                     "type": "table",
                     "caption": "Chaos Bolt",
-                    "colLabels": [
-                        "{@dice d8}",
-                        "Damage Type"
-                    ],
                     "colStyles": [
                         "col-2 text-center",
                         "col-10"
+                    ],
+                    "colLabels": [
+                        "{@dice d8}",
+                        "Damage Type"
                     ],
                     "rows": [
                         [
@@ -37145,6 +37164,7 @@
                 "You choose nonmagical flame that you can see within range and that fits within a 5-foot cube. You affect it in one of the following ways:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You instantaneously expand the flame 5 feet in one direction, provided that wood or other fuel is present in the new location.",
                         "You instantaneously extinguish the flames within the cube.",
@@ -37796,6 +37816,7 @@
                 },
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "A constant {@spell gust of wind} in two locations of your choice",
                         "{@spell Spike growth} in one location of your choice",
@@ -38455,12 +38476,12 @@
                 "Whenever the mount disappears, it leaves behind any objects it was wearing or carrying.",
                 {
                     "type": "inset",
-                    "source": "FTD",
-                    "page": 190,
                     "name": "Dragonnel Steeds",
                     "entries": [
                         "With the DM's permission, a paladin can summon a spirit in the form of a {@creature dragonnel|ftd} using the find greater steed spell, which appears in {@i Xanathar's Guide to Everything}."
-                    ]
+                    ],
+                    "source": "FTD",
+                    "page": 190
                 }
             ],
             "entriesHigherLevel": []
@@ -38684,6 +38705,7 @@
                 },
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Your walking speed increases by 10 feet.",
                         "You gain {@sense darkvision} with a range of 120 feet.",
@@ -38700,6 +38722,7 @@
                 },
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You gain 10 temporary hit points.",
                         "You make Constitution saving throws with advantage.",
@@ -38774,6 +38797,7 @@
                 "You seize the air and compel it to create one of the following effects at a point you can see within range:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "One Medium or smaller creature that you choose must succeed on a Strength saving throw or be pushed up to 5 feet away from you.",
                         "You create a small blast of air capable of moving one object that is neither held nor carried and that weighs no more than 5 pounds. The object is pushed up to 10 feet away from you. It isn't pushed with enough force to cause damage.",
@@ -39397,6 +39421,7 @@
                 "Flames race across your body, shedding bright light in a 30-foot radius and dim light for an additional 30 feet for the spell's duration. The flames don't harm you. Until the spell ends, you gain the following benefits:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You are immune to fire damage and have resistance to cold damage.",
                         "Any creature that moves within 5 feet of you for the first time on a turn or ends its turn there takes {@damage 1d10} fire damage.",
@@ -39479,6 +39504,7 @@
                 "Until the spell ends, ice rimes your body, and you gain the following benefits:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You are immune to cold damage and have resistance to fire damage.",
                         "You can move across {@quickref difficult terrain||3} created by ice or snow without spending extra movement.",
@@ -39560,6 +39586,7 @@
                 "Until the spell ends, bits of rock spread across your body, and you gain the following benefits:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You have resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.",
                         "You can use your action to create a small earthquake on the ground in a 15-foot radius centered on you. Other creatures on that ground must succeed on a Dexterity saving throw or be knocked {@condition prone}.",
@@ -39638,6 +39665,7 @@
                 "Until the spell ends, wind whirls around you, and you gain the following benefits:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Ranged weapon attacks made against you have disadvantage on the attack roll.",
                         "You gain a flying speed of 60 feet. If you are still flying when the spell ends, you fall, unless you can somehow prevent it.",
@@ -40505,6 +40533,7 @@
                 "You choose a portion of dirt or stone that you can see within range and that fits within a 5-foot cube. You manipulate it in one of the following ways:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "If you target an area of loose earth, you can instantaneously excavate it, move it along the ground, and deposit it up to 5 feet away. This movement doesn't involve enough force to cause damage.",
                         "You cause shapes, colors, or both to appear on the dirt or stone, spelling out words, creating images, or shaping patterns. The changes last for 1 hour.",
@@ -41205,6 +41234,7 @@
                 "You choose an area of water that you can see within range and that fits within a 5-foot cube. You manipulate it in one of the following ways:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You instantaneously move or otherwise change the flow of the water as you direct, up to 5 feet in any direction. This movement doesn't have enough force to cause damage.",
                         "You cause the water to form into simple shapes and animate at your direction. This change lasts for 1 hour.",
@@ -41960,13 +41990,14 @@
                 "You utter foul words, summoning demons from the chaos of the Abyss. Roll on the following table to determine what appears.",
                 {
                     "type": "table",
-                    "colLabels": [
-                        "{@dice d6}",
-                        "Demons Summoned"
-                    ],
+                    "caption": "",
                     "colStyles": [
                         "col-1 text-center",
                         "col-11"
+                    ],
+                    "colLabels": [
+                        "{@dice d6}",
+                        "Demons Summoned"
                     ],
                     "rows": [
                         [
@@ -42231,6 +42262,7 @@
                 "You endow yourself with endurance and martial prowess fueled by magic. Until the spell ends, you can't cast spells, and you gain the following benefits:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "You gain 50 temporary hit points. If any of these remain when the spell ends, they are lost.",
                         "You have advantage on attack rolls that you make with simple and martial weapons.",
@@ -43064,6 +43096,7 @@
                 "The wind has the following effects:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "It {@condition deafened||deafens} you and other creatures in its area.",
                         "It extinguishes unprotected flames in its area that are torch-sized or smaller.",
@@ -45791,6 +45824,7 @@
                 "You touch a creature, which must succeed on a Wisdom saving throw or become cursed for the duration. Until the curse ends, the target suffers one of the following effects of your choice:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Choose one ability. The target has {@variantrule Disadvantage|XPHB} on ability checks and saving throws made with that ability.",
                         "The target has {@variantrule Disadvantage|XPHB} on attack rolls against you.",
@@ -46699,6 +46733,7 @@
                 "Each Humanoid in a 20-foot-radius {@variantrule Sphere [Area of Effect]|XPHB|Sphere} centered on a point you choose within range must succeed on a Charisma saving throw or be affected by one of the following effects (choose for each creature):",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "The creature has {@variantrule Immunity|XPHB} to the {@condition Charmed|XPHB} and {@condition Frightened|XPHB} conditions until the spell ends. If the creature was already {@condition Charmed|XPHB} or {@condition Frightened|XPHB}, those conditions are suppressed for the duration.",
                         "The creature becomes {@variantrule Indifferent [Attitude]|XPHB|Indifferent} about creatures of your choice that it's {@variantrule Hostile [Attitude]|XPHB|Hostile} toward. This indifference ends if the target takes damage or witnesses its allies taking damage. When the spell ends, the creature's attitude returns to normal."
@@ -47815,6 +47850,7 @@
                 "Choose three of the following facts; you learn those facts as they pertain to the spell's area:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Locations of settlements",
                         "Locations of portals to other planes of existence",
@@ -48164,6 +48200,7 @@
                 "Each creature in a 10-foot-radius {@variantrule Sphere [Area of Effect]|XPHB|Sphere} centered on a point you choose within range must succeed on a Wisdom saving throw, or that target can't take Bonus Actions or Reactions and must roll {@dice 1d10} at the start of each of its turns to determine its behavior for that turn, consulting the table below.",
                 {
                     "type": "table",
+                    "caption": "",
                     "colStyles": [
                         "col-2 text-center",
                         "col-10"
@@ -55997,6 +56034,7 @@
                 "You touch a creature and magically remove one of the following effects from it:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "1 {@condition Exhaustion|XPHB} level",
                         "The {@condition Charmed|XPHB} or {@condition Petrified|XPHB} condition",
@@ -56168,6 +56206,7 @@
                         "Place one of the following magical effects within the warded area:",
                         {
                             "type": "list",
+                            "style": null,
                             "items": [
                                 "{@spell Dancing Lights|XPHB} in four corridors, with a simple program that the lights repeat as long as Guards and Wards lasts",
                                 "{@spell Magic Mouth|XPHB} in two locations",
@@ -59739,6 +59778,7 @@
                 "Choose one or more of the following types of creatures: Celestials, Elementals, Fey, Fiends, or Undead. The circle affects a creature of the chosen type in the following ways:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "The creature can't willingly enter the {@variantrule Cylinder [Area of Effect]|XPHB|Cylinder} by nonmagical means. If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw.",
                         "The creature has {@variantrule Disadvantage|XPHB} on attack rolls against targets within the {@variantrule Cylinder [Area of Effect]|XPHB|Cylinder}.",
@@ -61687,6 +61727,7 @@
                 "When you cast the spell, you decide what sort of security the spell provides, choosing any of the following properties:",
                 {
                     "type": "list",
+                    "style": null,
                     "items": [
                         "Sound can't pass through the barrier at the edge of the warded area.",
                         "The barrier of the warded area appears dark and foggy, preventing vision (including {@sense Darkvision|XPHB}) through it.",
@@ -64637,6 +64678,7 @@
                 "You touch a dead Humanoid or a piece of one. If the creature has been dead no longer than 10 days, the spell forms a new body for it and calls the soul to enter that body. Roll {@dice 1d10} and consult the table below to determine the body's species, or the DM chooses another playable species.",
                 {
                     "type": "table",
+                    "caption": "",
                     "colStyles": [
                         "col-2 text-center",
                         "col-10"
@@ -65363,6 +65405,7 @@
                 "You can see and hear a creature you choose that is on the same plane of existence as you. The target makes a Wisdom saving throw, which is modified (see the tables below) by how well you know the target and the sort of physical connection you have to it. The target doesn't know what it is making the save against, only that it feels uneasy.",
                 {
                     "type": "table",
+                    "caption": "",
                     "colStyles": [
                         "col-10",
                         "col-2 text-center"
@@ -65388,6 +65431,7 @@
                 },
                 {
                     "type": "table",
+                    "caption": "",
                     "colStyles": [
                         "col-10",
                         "col-2 text-center"
@@ -69453,6 +69497,7 @@
                         "Here are the meanings of the terms in the table's Familiarity column:",
                         {
                             "type": "list",
+                            "style": null,
                             "items": [
                                 "\"Permanent circle\" means a permanent teleportation circle whose sigil sequence you know.",
                                 "\"Linked object\" means you possess an object taken from the desired destination within the last six months, such as a book from a wizard's library.",

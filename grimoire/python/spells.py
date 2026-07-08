@@ -4,10 +4,21 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Optional
 
-from python.dnd.types import AreaTags, SpellComponent, SpellSchool
+from python.dnd.entries import Entry, parse_entries
+from python.dnd.types import (
+    Ability,
+    AreaTags,
+    Condition,
+    CreatureTypes,
+    DamageType,
+    SpellComponent,
+    SpellSchool,
+)
 
 SCRIPT_DIR = Path(__file__).parent.parent.parent
-PATH_SRC = SCRIPT_DIR / "submodules" / "5e-src" / "data" / "spells"
+PATH_SRC = (
+    SCRIPT_DIR / "submodules" / "5e-src" / "data" / "spells"
+)  # TODO For the moment, only core spells are loaded, homebrew and partnered needs separate care.
 
 
 @dataclass
@@ -34,30 +45,37 @@ class Spell:
     scalingLevelDice: dict[str, Any] = field(default_factory=dict[str, Any])
 
     # String arrays / Tags / Sub-lists
-    abilityCheck: list[str] = field(default_factory=list[str])
-    affectsCreatureType: list[str] = field(default_factory=list[str])
+    abilityCheck: list[Ability] = field(default_factory=list[Ability])
+    affectsCreatureType: list[CreatureTypes] = field(default_factory=list[CreatureTypes])
     alias: list[str] = field(default_factory=list[str])
     areaTags: list[AreaTags] = field(default_factory=list[AreaTags])
-    conditionImmune: list[str] = field(default_factory=list[str])
-    conditionInflict: list[str] = field(default_factory=list[str])
-    damageImmune: list[str] = field(default_factory=list[str])
-    damageInflict: list[str] = field(default_factory=list[str])
-    damageResist: list[str] = field(default_factory=list[str])
-    damageVulnerable: list[str] = field(default_factory=list[str])
+    conditionImmune: list[Condition] = field(default_factory=list[Condition])
+    conditionInflict: list[Condition] = field(default_factory=list[Condition])
+    damageImmune: list[DamageType] = field(default_factory=list[DamageType])
+    damageInflict: list[DamageType] = field(default_factory=list[DamageType])
+    damageResist: list[DamageType] = field(default_factory=list[DamageType])
+    damageVulnerable: list[DamageType] = field(default_factory=list[DamageType])
     miscTags: list[str] = field(default_factory=list[str])
     referenceSources: list[str] = field(default_factory=list[str])
     savingThrow: list[str] = field(default_factory=list[str])
     spellAttack: list[str] = field(default_factory=list[str])
 
-    # Content/Text arrays (Often mixed types containing nested strings/objects)
-    entries: list[Any] = field(default_factory=list[Any])
-    entriesHigherLevel: list[Any] = field(default_factory=list[Any])
+    # Content Entries
+    entries: list[Entry] = field(default_factory=list[Entry])
+    entriesHigherLevel: list[Entry] = field(default_factory=list[Entry])
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> "Spell":
         """Creates a Spell instance from a raw dictionary, filtering out extra keys."""
         valid_fields = {f.name for f in cls.__dataclass_fields__.values()}
         filtered_data = {k: v for k, v in data.items() if k in valid_fields}
+
+        if "entries" in filtered_data:
+            filtered_data["entries"] = parse_entries(filtered_data["entries"])
+
+        if "entriesHigherLevel" in filtered_data:
+            filtered_data["entriesHigherLevel"] = parse_entries(filtered_data["entriesHigherLevel"])
+
         return cls(**filtered_data)
 
     @property
