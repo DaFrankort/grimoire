@@ -1,43 +1,47 @@
 import asyncio
 import logging
 import os
+from dataclasses import asdict
 from typing import Any
 
 from weasyprint import HTML  # type: ignore
 
-from python.methods import description_to_html, english_to_latin, markdown_to_html
-from python.spell import SPELLS, Spell, get_spell
+from python.methods import english_to_latin, markdown_to_html
+from python.spells import Spell, SpellList
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 
 
 class API:
-    selected: set[Spell] = set()
+    selected: set[Spell]
+    spells: SpellList
+
+    def __init__(self):
+        self.selected = set()
+        self.spells = SpellList()
+        pass
 
     def fetch(self) -> list[dict[str, str | int | None]]:
-        spells = sorted(
-            (s.json for s in SPELLS.entries if s not in self.selected),
-            key=lambda spell: (spell["level"], spell["name"]),
-        )
+        spells = [asdict(s) for s in self.spells.get_all()]
         logging.debug(f"Loaded {len(spells)} spells.")
         return spells
 
     def select(self, name: str, source: str) -> list[dict[str, Any]]:
-        spell = get_spell(name, source)
+        spell = self.spells.get(name, source)
         if spell:
             logging.debug(f"Selected - {name} {source}")
             self.selected.add(spell)
-        return [s.json for s in self.selected]
+        return [asdict(s) for s in self.selected]
 
     def deselect(self, name: str, source: str) -> list[dict[str, Any]]:
-        spell = get_spell(name, source)
+        spell = self.spells.get(name, source)
         if spell:
             logging.debug(f"Deselected - {name} {source}")
             self.selected.remove(spell)
-        return [s.json for s in self.selected]
+        return [asdict(s) for s in self.selected]
 
     def export_pdf(self, name: str, source: str):
-        spell = get_spell(name, source)
+        spell = self.spells.get(name, source)
         if spell is None:
             logging.warning(f"Could not find Spell - {name} ({source})")
             return f"{name} {source} - Could not find Spell"
@@ -45,22 +49,23 @@ class API:
         with open(TEMPLATE_PATH, "r", encoding="utf-8") as file:
             template_content = file.read()
 
-        description = description_to_html(spell.description)
+        description = "placeholder"  # TODO spell.entries
         vocal_component = ""
-        if "V" in spell.components:
+        if spell.components.vocal:
             vocal_component = asyncio.run(english_to_latin(spell.name))
-            if spell.level == "Cantrip":
+            if spell.level == 0:
                 vocal_component = vocal_component.split(" ")[0]
+        subtitle = f"{spell.level_str} {spell.school}"
 
         filled_html = template_content.format(
             name=spell.name,
             source=spell.source,
-            subtitle=spell.subtitle,
+            subtitle=subtitle,
             vocal=vocal_component,
-            casting=spell.casting_time,
-            range=spell.spell_range,
+            casting="spell.casting_time",  # TODO
+            range="spell.spell_range",  # TODO
             components=spell.components,
-            duration=markdown_to_html(spell.duration),
+            duration="markdown_to_html(spell.duration)",  # TODO
             description=markdown_to_html(description),
         )
 

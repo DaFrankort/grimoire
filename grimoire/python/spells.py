@@ -2,9 +2,9 @@ import json
 import logging
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Literal, Optional
+from typing import Any, Optional
 
-from python.spells.types import SpellComponent
+from python.dnd.types import AreaTags, SpellComponent, SpellSchool
 
 SCRIPT_DIR = Path(__file__).parent.parent.parent
 PATH_SRC = SCRIPT_DIR / "submodules" / "5e-src" / "data" / "spells"
@@ -14,13 +14,10 @@ PATH_SRC = SCRIPT_DIR / "submodules" / "5e-src" / "data" / "spells"
 class Spell:
     name: str
     source: str
-
-    # Core metadata with simple defaults
     level: int = 0
-    school: Optional[Literal["A", "C", "D", "E", "I", "N", "V", "T"]] = None
+    school: Optional[SpellSchool] = None
     page: Optional[int] = None
 
-    # Booleans (Almost always omitted in raw JSON if False)
     basicRules: bool = False
     basicRules2024: bool = False
     hasFluff: bool = False
@@ -29,32 +26,32 @@ class Spell:
     srd52: bool = False
 
     # Complex Structural Object Mappings
-    components: dict[str, SpellComponent] = field(default_factory=dict)
-    meta: dict[str, bool] = field(default_factory=dict)
-    range: dict[str, Any] = field(default_factory=dict)  # Crucial: Dict, not List
-    time: list[dict[str, Any]] = field(default_factory=list)
-    duration: list[dict[str, Any]] = field(default_factory=list)
-    scalingLevelDice: dict[str, Any] = field(default_factory=dict)
+    components: SpellComponent = field(default_factory=SpellComponent)
+    meta: dict[str, bool] = field(default_factory=dict[str, bool])
+    range: dict[str, Any] = field(default_factory=dict[str, Any])
+    time: list[dict[str, Any]] = field(default_factory=list[dict[str, Any]])
+    duration: list[dict[str, Any]] = field(default_factory=list[dict[str, Any]])
+    scalingLevelDice: dict[str, Any] = field(default_factory=dict[str, Any])
 
     # String arrays / Tags / Sub-lists
-    abilityCheck: list[str] = field(default_factory=list)
-    affectsCreatureType: list[str] = field(default_factory=list)
-    alias: list[str] = field(default_factory=list)
-    areaTags: list[Literal["MT", "ST"]] = field(default_factory=list)
-    conditionImmune: list[str] = field(default_factory=list)
-    conditionInflict: list[str] = field(default_factory=list)
-    damageImmune: list[str] = field(default_factory=list)
-    damageInflict: list[str] = field(default_factory=list)
-    damageResist: list[str] = field(default_factory=list)
-    damageVulnerable: list[str] = field(default_factory=list)
-    miscTags: list[str] = field(default_factory=list)
-    referenceSources: list[str] = field(default_factory=list)
-    savingThrow: list[str] = field(default_factory=list)
-    spellAttack: list[str] = field(default_factory=list)
+    abilityCheck: list[str] = field(default_factory=list[str])
+    affectsCreatureType: list[str] = field(default_factory=list[str])
+    alias: list[str] = field(default_factory=list[str])
+    areaTags: list[AreaTags] = field(default_factory=list[AreaTags])
+    conditionImmune: list[str] = field(default_factory=list[str])
+    conditionInflict: list[str] = field(default_factory=list[str])
+    damageImmune: list[str] = field(default_factory=list[str])
+    damageInflict: list[str] = field(default_factory=list[str])
+    damageResist: list[str] = field(default_factory=list[str])
+    damageVulnerable: list[str] = field(default_factory=list[str])
+    miscTags: list[str] = field(default_factory=list[str])
+    referenceSources: list[str] = field(default_factory=list[str])
+    savingThrow: list[str] = field(default_factory=list[str])
+    spellAttack: list[str] = field(default_factory=list[str])
 
     # Content/Text arrays (Often mixed types containing nested strings/objects)
-    entries: list[Any] = field(default_factory=list)
-    entriesHigherLevel: list[Any] = field(default_factory=list)
+    entries: list[Any] = field(default_factory=list[Any])
+    entriesHigherLevel: list[Any] = field(default_factory=list[Any])
 
     @classmethod
     def from_json(cls, data: dict[str, Any]) -> "Spell":
@@ -63,13 +60,24 @@ class Spell:
         filtered_data = {k: v for k, v in data.items() if k in valid_fields}
         return cls(**filtered_data)
 
+    @property
+    def level_str(self) -> str:
+        """Returns the level as a string."""
+        if self.level == 0:
+            return "Cantrip"
+        return f"Level {self.level}"
+
+    @property
+    def json(self) -> str:
+        return json.dumps(asdict(self), default=str)
+
 
 class SpellList:
-    entries: dict[str, dict[str, Spell]]
+    _entries: dict[str, dict[str, Spell]]
     sources: set[str]
 
     def __init__(self):
-        self.entries = {}
+        self._entries = {}
         self.sources = set()
         self._load_entries()
 
@@ -94,7 +102,7 @@ class SpellList:
                 continue
 
             logging.info(f"Loading spells - {path.name}")
-            self.entries[source] = {}
+            self._entries[source] = {}
 
             with open(path, "r", encoding="utf-8") as file:
                 file_data = json.load(file)
@@ -106,19 +114,24 @@ class SpellList:
                 for spell in spells:
                     name = spell.get("name")
                     logging.debug(f"- {name} {source}")
-                    self.entries[source][name] = Spell.from_json(spell)
+                    self._entries[source][name] = Spell.from_json(spell)
 
-        logging.info(f"{len(self.entries)} Spells loaded.")
+        logging.info(f"{len(self._entries)} Spells loaded.")
 
         output_path = Path(__file__).parent / "debug_parsed.json"
         with open(output_path, "w", encoding="utf-8") as out_file:
-            # Dynamically convert the nested Spell objects into dictionaries
             serializable_entries = {
                 source: {name: asdict(spell_obj) for name, spell_obj in spells_dict.items()}
-                for source, spells_dict in self.entries.items()
+                for source, spells_dict in self._entries.items()
             }
-
             json.dump(serializable_entries, out_file, indent=4, ensure_ascii=False)
+
+    def get(self, name: str, source: str) -> Spell | None:
+        return self._entries.get(source, {}).get(name, None)
+
+    def get_all(self) -> list[Spell]:
+        flat_list = [spell for source_dict in self._entries.values() for spell in source_dict.values()]
+        return sorted(flat_list, key=lambda spell: (spell.level, spell.name))
 
 
 def generate_spell_template():
@@ -160,5 +173,4 @@ def generate_spell_template():
     print(f"Successfully generated template with {len(sorted_template)} keys at: {output_path.resolve()}")
 
 
-SPELLS = SpellList()
-generate_spell_template()
+# generate_spell_template()

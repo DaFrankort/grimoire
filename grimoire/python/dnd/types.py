@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 SpellSchool = Literal["A", "C", "D", "E", "I", "N", "V", "T"]
+AreaTags = Literal["MT", "ST"]
 
 
 @dataclass
