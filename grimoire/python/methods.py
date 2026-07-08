@@ -1,7 +1,8 @@
 import re
 
-from python.dnd_abstract import Description
 from googletrans import Translator  # type: ignore
+
+from python.dnd_abstract import Description
 
 
 def markdown_to_html(text: str) -> str:
