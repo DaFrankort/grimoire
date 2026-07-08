@@ -3,7 +3,7 @@ A D&D 5e tool to generate spellbook pages.
 
 ## Setup
 Using Python 3.11 or higher, create a virtual environment and install the dependencies:
-```py
+```bash
 git submodule update --init
 
 python -m venv venv
@@ -15,7 +15,12 @@ This project uses WeasyPrint to generate PDFs. You may need to install additiona
 
 ## Running
 Use the following commands to activate the virtual environment and run the program:
-```py
+```bash
 source venv/Scripts/activate
 python grimoire
+```
+
+Additionally grimoire can be started with the following argument:
+```bash
+  --debug  # Debug mode, enables debug logging and webview's debug mode.
 ```
