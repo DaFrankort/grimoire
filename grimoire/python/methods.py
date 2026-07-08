@@ -1,8 +1,47 @@
 import re
+from typing import Literal, Sequence, TypedDict
 
 from googletrans import Translator  # type: ignore
 
-from python.dnd_abstract import Description
+
+class DescriptionRowRange(TypedDict):
+    type: Literal["range"]
+    min: int
+    max: int
+
+
+class DescriptionText(TypedDict):
+    name: str
+    type: Literal["text"]
+    value: str
+
+
+class DescriptionTableTable(TypedDict):
+    type: Literal["table"]
+    title: str
+    headers: list[str] | None
+    rows: Sequence[Sequence[str | DescriptionRowRange | int | None]]
+
+
+class DescriptionTable(TypedDict):
+    name: str
+    type: Literal["table"]
+    table: DescriptionTableTable
+
+
+class DescriptionListList(TypedDict):
+    type: Literal["list"]
+    caption: str
+    entries: list["str | DescriptionListList"]
+
+
+class DescriptionList(TypedDict):
+    name: str
+    type: Literal["list"]
+    list: DescriptionListList
+
+
+Description = DescriptionTable | DescriptionText | DescriptionList
 
 
 def markdown_to_html(text: str) -> str:

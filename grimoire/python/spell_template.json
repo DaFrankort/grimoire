@@ -1,0 +1,130 @@
+{
+    "abilityCheck": [
+        "strength"
+    ],
+    "additionalSources": [
+        {
+            "source": "FTD",
+            "page": 190
+        }
+    ],
+    "affectsCreatureType": [
+        "humanoid"
+    ],
+    "alias": [
+        "Firebolt"
+    ],
+    "areaTags": [
+        "MT",
+        "ST"
+    ],
+    "basicRules": true,
+    "basicRules2024": true,
+    "components": {
+        "s": true
+    },
+    "conditionImmune": [
+        "paralyzed",
+        "restrained"
+    ],
+    "conditionInflict": [
+        "charmed"
+    ],
+    "damageImmune": [
+        "poison"
+    ],
+    "damageInflict": [
+        "force"
+    ],
+    "damageResist": [
+        "cold",
+        "lightning",
+        "radiant"
+    ],
+    "damageVulnerable": [
+        "acid",
+        "cold",
+        "fire",
+        "force",
+        "lightning",
+        "necrotic",
+        "poison",
+        "psychic",
+        "radiant",
+        "thunder"
+    ],
+    "duration": [
+        {
+            "type": "timed",
+            "duration": {
+                "type": "hour",
+                "amount": 24
+            }
+        }
+    ],
+    "entries": [
+        "You create a spectral globe around the head of a willing creature you can see within range. The globe is filled with fresh air that lasts until the spell ends. If the creature has more than one head, the globe of air appears around only one of its heads (which is all the creature needs to avoid suffocation, assuming that all its heads share the same respiratory system)."
+    ],
+    "entriesHigherLevel": [
+        {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+                "When you cast this spell using a spell slot of 3rd level or higher, you can create two additional globes of fresh air for each slot level above 2nd."
+            ]
+        }
+    ],
+    "hasFluff": true,
+    "hasFluffImages": true,
+    "level": 2,
+    "meta": {
+        "ritual": true
+    },
+    "miscTags": [
+        "SGT"
+    ],
+    "otherSources": [
+        {
+            "source": "AitFR-FCD",
+            "page": 11
+        }
+    ],
+    "page": 22,
+    "range": {
+        "type": "point",
+        "distance": {
+            "type": "feet",
+            "amount": 60
+        }
+    },
+    "referenceSources": [
+        "LoX"
+    ],
+    "reprintedAs": [
+        "Summon Dragon|XPHB"
+    ],
+    "savingThrow": [
+        "wisdom"
+    ],
+    "scalingLevelDice": {
+        "label": "necrotic damage",
+        "scaling": {
+            "1": "1d4",
+            "5": "2d4",
+            "11": "3d4",
+            "17": "4d4"
+        }
+    },
+    "school": "C",
+    "spellAttack": [
+        "R"
+    ],
+    "srd": true,
+    "srd52": true,
+    "time": [
+        {
+            "number": 1,
+            "unit": "action"
+        }
+    ]
+}
