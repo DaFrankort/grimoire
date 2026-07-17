@@ -1,6 +1,7 @@
 let filterOptions = {};
 let selectedClassFilter = "all";
 let selectedSchoolFilter = "all";
+let selectedLevelFilter = "all";
 
 function _createSpellRowHtml(spell, isSelected) {
   const nameHtml = spell.url
@@ -72,11 +73,39 @@ function filterSpells() {
         return uniqueClassKey === selectedClassFilter;
       });
 
+    const spellLevel = row.cells[2].textContent;
+    const matchesLevel = selectedLevelFilter === "all" || spellLevel === selectedLevelFilter;
+
     const spellSchool = row.cells[3].textContent.toLowerCase();
     const matchesSchool = selectedSchoolFilter === "all" || spellSchool === selectedSchoolFilter;
     
-    row.style.display = matchesSearch && matchesClass && matchesSchool ? "" : "none";
+    row.style.display = matchesSearch && matchesClass && matchesLevel && matchesSchool ? "" : "none";
   });
+}
+
+function setupLevelFilterDropdown(levels) {
+  const filterContainer = document.getElementById("level-filter-container");
+  if (!filterContainer) return;
+
+  const select = document.createElement("select");
+  select.id = "level-filter";
+
+  select.innerHTML = `<option value="all">All Levels</option>`;
+
+  levels.forEach((level) => {
+    const option = document.createElement("option");
+    option.value = level;
+    option.textContent = level;
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", (e) => {
+    selectedLevelFilter = e.target.value;
+    filterSpells();
+  });
+
+  filterContainer.innerHTML = "";
+  filterContainer.appendChild(select);
 }
 
 function setupSchoolFilterDropdown(schools) {
@@ -154,6 +183,7 @@ window.addEventListener("pywebviewready", () => {
     if (!filterOptions) return;
     if (filterOptions.classes) setupClassFilterDropdown(filterOptions.classes);
     if (filterOptions.schools) setupSchoolFilterDropdown(filterOptions.schools);
+    if (filterOptions.levels) setupLevelFilterDropdown(filterOptions.levels);
   });
   getSpells();
 });
