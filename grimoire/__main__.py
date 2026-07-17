@@ -25,8 +25,10 @@ if __name__ == "__main__":
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
-    api = API()
+    api = API(debug=args.debug)
     html_path = os.path.join(os.path.dirname(__file__), "index.html")
     webview.create_window(title="Grimoire", url=html_path, js_api=api, width=800, height=600, maximized=True)  # type: ignore
+
+    logging.info("Grimoire opened.")
     webview.start(debug=args.debug)
-    logging.info("Grimoire started.")
+    logging.info("Grimoire closed.")

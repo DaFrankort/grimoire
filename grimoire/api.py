@@ -12,7 +12,11 @@ TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 
 
 class API:
+    _debug: bool
     selected: set[Spell] = set()
+
+    def __init__(self, debug: bool):
+        self._debug = debug
 
     def fetch(self) -> list[dict[str, str | int | None]]:
         spells = sorted(
@@ -70,7 +74,7 @@ class API:
         os.makedirs("generated", exist_ok=True)
         base_path = os.path.dirname(TEMPLATE_PATH)
 
-        if True:  # Debugging
+        if self._debug:
             debug_path = os.path.join(os.path.dirname(__file__), "_debug.html")
             with open(debug_path, "w", encoding="utf-8") as debug_file:
                 debug_file.write(filled_html)
