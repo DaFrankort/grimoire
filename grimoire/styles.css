@@ -26,3 +26,8 @@ button {
 .btn-pdf:hover {
     background: #bd2130;
 }
+
+#filters {
+    display: flex;
+    gap: 1rem;
+}
