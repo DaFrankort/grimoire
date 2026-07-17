@@ -73,10 +73,6 @@ class Spell(DNDEntry):
     def subtitle(self) -> str:
         return f"{self.level} {self.school}"
 
-    def has_class(self, classes: list[SpellClass]) -> bool:
-        """Checks if the spell is related to any of the given classes."""
-        return any([class_ in self.classes for class_ in classes])
-
 
 class SpellList(DNDEntryList[Spell]):
     type = Spell
