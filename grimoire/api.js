@@ -1,6 +1,7 @@
 let filterOptions = {};
 let selectedClassFilter = "all";
 let selectedSchoolFilter = "all";
+let selectedLevelFilter = "all";
 
 function _createSpellRowHtml(spell, isSelected) {
   const nameHtml = spell.url
@@ -72,64 +73,37 @@ function filterSpells() {
         return uniqueClassKey === selectedClassFilter;
       });
 
+    const spellLevel = row.cells[2].textContent;
+    const matchesLevel = selectedLevelFilter === "all" || spellLevel === selectedLevelFilter;
+
     const spellSchool = row.cells[3].textContent.toLowerCase();
     const matchesSchool = selectedSchoolFilter === "all" || spellSchool === selectedSchoolFilter;
     
-    row.style.display = matchesSearch && matchesClass && matchesSchool ? "" : "none";
+    row.style.display = matchesSearch && matchesClass && matchesLevel && matchesSchool ? "" : "none";
   });
 }
 
-function setupSchoolFilterDropdown(schools) {
-  const filterContainer = document.getElementById("school-filter-container");
-  if (!filterContainer) return;
+function _createDropdown({ containerId, defaultText, items, getValue, getLabel, onChange }) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
   const select = document.createElement("select");
-  select.id = "school-filter";
+  select.innerHTML = `<option value="all">${defaultText}</option>`;
 
-  select.innerHTML = `<option value="all">All Schools</option>`;
-
-  schools.forEach((school) => {
+  items.forEach((item) => {
     const option = document.createElement("option");
-    option.value = school;
-
-    option.textContent = school.charAt(0).toUpperCase() + school.slice(1);
+    option.value = getValue(item);
+    option.textContent = getLabel(item);
     select.appendChild(option);
   });
 
   select.addEventListener("change", (e) => {
-    selectedSchoolFilter = e.target.value;
+    onChange(e.target.value);
     filterSpells();
   });
 
-  filterContainer.innerHTML = "";
-  filterContainer.appendChild(select);
-}
-
-function setupClassFilterDropdown(classes) {
-  const filterContainer = document.getElementById("class-filter-container");
-  if (!filterContainer) return;
-
-  const select = document.createElement("select");
-  select.id = "class-filter";
-
-  select.innerHTML = `<option value="all">All Classes</option>`;
-
-  const sortedClasses = [...classes].sort((a, b) => a.name.localeCompare(b.name));
-  sortedClasses.forEach((c) => {
-    const optionText = `${c.name} (${c.source})`;
-    const option = document.createElement("option");
-    option.value = optionText;
-    option.textContent = optionText;
-    select.appendChild(option);
-  });
-
-  select.addEventListener("change", (e) => {
-    selectedClassFilter = e.target.value;
-    filterSpells();
-  });
-
-  filterContainer.innerHTML = "";
-  filterContainer.appendChild(select);
+  container.innerHTML = "";
+  container.appendChild(select);
 }
 
 function exportAll() {
@@ -152,8 +126,45 @@ window.addEventListener("pywebviewready", () => {
   window.pywebview.api.get_filter_options().then((options) => {
     filterOptions = options;
     if (!filterOptions) return;
-    if (filterOptions.classes) setupClassFilterDropdown(filterOptions.classes);
-    if (filterOptions.schools) setupSchoolFilterDropdown(filterOptions.schools);
+    if (filterOptions.classes) {
+      const sortedClasses = [...filterOptions.classes].sort((a, b) => a.name.localeCompare(b.name));
+      _createDropdown({
+        containerId: "class-filter-container",
+        defaultText: "All Classes",
+        items: sortedClasses,
+        getValue: (c) => `${c.name} (${c.source})`,
+        getLabel: (c) => `${c.name} (${c.source})`,
+        onChange: (val) => {
+          selectedClassFilter = val;
+        },
+      });
+    }
+
+    if (filterOptions.schools) {
+      _createDropdown({
+        containerId: "school-filter-container",
+        defaultText: "All Schools",
+        items: filterOptions.schools,
+        getValue: (s) => s,
+        getLabel: (s) => s.charAt(0).toUpperCase() + s.slice(1),
+        onChange: (val) => {
+          selectedSchoolFilter = val;
+        },
+      });
+    }
+
+    if (filterOptions.levels) {
+      _createDropdown({
+        containerId: "level-filter-container",
+        defaultText: "All Levels",
+        items: filterOptions.levels,
+        getValue: (l) => l,
+        getLabel: (l) => l,
+        onChange: (val) => {
+          selectedLevelFilter = val;
+        },
+      });
+    }
   });
   getSpells();
 });

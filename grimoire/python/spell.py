@@ -93,6 +93,15 @@ class SpellList(DNDEntryList[Spell]):
             schools.add(spell.school.lower())
         return sorted(list(schools))
 
+    def get_levels(self) -> list[str]:
+        """Returns spell levels in sorted order."""
+        levels: dict[str, int] = {}
+        for spell in self.entries:
+            if spell.level in levels:
+                continue
+            levels[spell.level] = spell.level_int
+        return sorted(levels, key=lambda k: levels[k])
+
 
 def get_spell(name: str, source: str) -> Spell | None:
     spell = [s for s in SPELLS.get(name, allowed_sources={source}) if s.source == source]
