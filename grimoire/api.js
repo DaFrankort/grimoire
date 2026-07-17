@@ -1,7 +1,7 @@
 let filterOptions = {};
-let selectedClassFilter = "all";
-let selectedSchoolFilter = "all";
-let selectedLevelFilter = "all";
+let selectedClassFilters = new Set();
+let selectedSchoolFilters = new Set();
+let selectedLevelFilters = new Set();
 
 function _createSpellRowHtml(spell, isSelected) {
   const nameHtml = spell.url
@@ -67,44 +67,84 @@ function filterSpells() {
 
     const spellClasses = JSON.parse(row.dataset.classes || "[]");
     const matchesClass =
-      selectedClassFilter === "all" ||
-      spellClasses.some((c) => {
-        const uniqueClassKey = `${c.name} (${c.source})`;
-        return uniqueClassKey === selectedClassFilter;
-      });
+      selectedClassFilters.size === 0 || spellClasses.some((c) => selectedClassFilters.has(`${c.name} (${c.source})`));
 
     const spellLevel = row.cells[2].textContent;
-    const matchesLevel = selectedLevelFilter === "all" || spellLevel === selectedLevelFilter;
+    const matchesLevel = selectedLevelFilters.size === 0 || selectedLevelFilters.has(spellLevel);
 
     const spellSchool = row.cells[3].textContent.toLowerCase();
-    const matchesSchool = selectedSchoolFilter === "all" || spellSchool === selectedSchoolFilter;
-    
+    const matchesSchool = selectedSchoolFilters.size === 0 || selectedSchoolFilters.has(spellSchool);
+
     row.style.display = matchesSearch && matchesClass && matchesLevel && matchesSchool ? "" : "none";
   });
 }
 
-function _createDropdown({ containerId, defaultText, items, getValue, getLabel, onChange }) {
+function _createMultiSelectDropdown({ containerId, defaultText, items, getValue, getLabel, trackingSet }) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const select = document.createElement("select");
-  select.innerHTML = `<option value="all">${defaultText}</option>`;
+  container.innerHTML = "";
+
+  const headerBtn = document.createElement("button");
+  headerBtn.className = "dropdown-header";
+  headerBtn.textContent = defaultText;
+
+  const contentDiv = document.createElement("div");
+  contentDiv.className = "dropdown-content";
+
+  contentDiv.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // Toggle visibility when clicking the header
+  headerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.querySelectorAll(".dropdown-container").forEach((c) => {
+      if (c !== container) c.classList.remove("active");
+    });
+    container.classList.toggle("active");
+  });
 
   items.forEach((item) => {
-    const option = document.createElement("option");
-    option.value = getValue(item);
-    option.textContent = getLabel(item);
-    select.appendChild(option);
+    const val = getValue(item);
+    const labelText = getLabel(item);
+
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = val;
+
+    checkbox.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        trackingSet.add(val);
+      } else {
+        trackingSet.delete(val);
+      }
+
+      if (trackingSet.size === 0) {
+        headerBtn.textContent = defaultText;
+      } else if (trackingSet.size <= 2) {
+        headerBtn.textContent = Array.from(trackingSet).join(", ");
+      } else {
+        headerBtn.textContent = `${trackingSet.size} Selected`;
+      }
+
+      filterSpells();
+    });
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(" " + labelText));
+    contentDiv.appendChild(label);
   });
 
-  select.addEventListener("change", (e) => {
-    onChange(e.target.value);
-    filterSpells();
-  });
-
-  container.innerHTML = "";
-  container.appendChild(select);
+  container.appendChild(headerBtn);
+  container.appendChild(contentDiv);
 }
+
+// Close the dropdown menus if clicking outside of them entirely
+document.addEventListener("click", () => {
+  document.querySelectorAll(".dropdown-container").forEach((c) => c.classList.remove("active"));
+});
 
 function exportAll() {
   window.pywebview.api.export_selected_to_pdf().then(alert);
@@ -126,43 +166,38 @@ window.addEventListener("pywebviewready", () => {
   window.pywebview.api.get_filter_options().then((options) => {
     filterOptions = options;
     if (!filterOptions) return;
+
     if (filterOptions.classes) {
       const sortedClasses = [...filterOptions.classes].sort((a, b) => a.name.localeCompare(b.name));
-      _createDropdown({
+      _createMultiSelectDropdown({
         containerId: "class-filter-container",
         defaultText: "All Classes",
         items: sortedClasses,
         getValue: (c) => `${c.name} (${c.source})`,
         getLabel: (c) => `${c.name} (${c.source})`,
-        onChange: (val) => {
-          selectedClassFilter = val;
-        },
+        trackingSet: selectedClassFilters,
       });
     }
 
     if (filterOptions.schools) {
-      _createDropdown({
+      _createMultiSelectDropdown({
         containerId: "school-filter-container",
         defaultText: "All Schools",
         items: filterOptions.schools,
-        getValue: (s) => s,
+        getValue: (s) => s.toLowerCase(),
         getLabel: (s) => s.charAt(0).toUpperCase() + s.slice(1),
-        onChange: (val) => {
-          selectedSchoolFilter = val;
-        },
+        trackingSet: selectedSchoolFilters,
       });
     }
 
     if (filterOptions.levels) {
-      _createDropdown({
+      _createMultiSelectDropdown({
         containerId: "level-filter-container",
         defaultText: "All Levels",
         items: filterOptions.levels,
         getValue: (l) => l,
         getLabel: (l) => l,
-        onChange: (val) => {
-          selectedLevelFilter = val;
-        },
+        trackingSet: selectedLevelFilters,
       });
     }
   });
