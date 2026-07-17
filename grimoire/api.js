@@ -1,5 +1,6 @@
 let filterOptions = {};
 let selectedClassFilter = "all";
+let selectedSchoolFilter = "all";
 
 function _createSpellRowHtml(spell, isSelected) {
   const nameHtml = spell.url
@@ -70,9 +71,38 @@ function filterSpells() {
         const uniqueClassKey = `${c.name} (${c.source})`;
         return uniqueClassKey === selectedClassFilter;
       });
+
+    const spellSchool = row.cells[3].textContent.toLowerCase();
+    const matchesSchool = selectedSchoolFilter === "all" || spellSchool === selectedSchoolFilter;
     
-    row.style.display = matchesSearch && matchesClass ? "" : "none";
+    row.style.display = matchesSearch && matchesClass && matchesSchool ? "" : "none";
   });
+}
+
+function setupSchoolFilterDropdown(schools) {
+  const filterContainer = document.getElementById("school-filter-container");
+  if (!filterContainer) return;
+
+  const select = document.createElement("select");
+  select.id = "school-filter";
+
+  select.innerHTML = `<option value="all">All Schools</option>`;
+
+  schools.forEach((school) => {
+    const option = document.createElement("option");
+    option.value = school;
+
+    option.textContent = school.charAt(0).toUpperCase() + school.slice(1);
+    select.appendChild(option);
+  });
+
+  select.addEventListener("change", (e) => {
+    selectedSchoolFilter = e.target.value;
+    filterSpells();
+  });
+
+  filterContainer.innerHTML = "";
+  filterContainer.appendChild(select);
 }
 
 function setupClassFilterDropdown(classes) {
@@ -121,9 +151,9 @@ function deselectSpell(name, source) {
 window.addEventListener("pywebviewready", () => {
   window.pywebview.api.get_filter_options().then((options) => {
     filterOptions = options;
-    if (filterOptions && filterOptions.classes) {
-      setupClassFilterDropdown(filterOptions.classes);
-    }
+    if (!filterOptions) return;
+    if (filterOptions.classes) setupClassFilterDropdown(filterOptions.classes);
+    if (filterOptions.schools) setupSchoolFilterDropdown(filterOptions.schools);
   });
   getSpells();
 });

@@ -15,6 +15,7 @@ TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
 @dataclass(frozen=True)
 class FilterOptions:
     classes: list[SpellClass]
+    schools: list[str]
 
 
 class API:
@@ -24,7 +25,7 @@ class API:
 
     def __init__(self, debug: bool):
         self._debug = debug
-        self.filter_options = FilterOptions(classes=list(SPELLS.get_classes()))
+        self.filter_options = FilterOptions(classes=list(SPELLS.get_classes()), schools=SPELLS.get_schools())
 
     def get_filter_options(self) -> dict[str, Any]:
         return asdict(self.filter_options)

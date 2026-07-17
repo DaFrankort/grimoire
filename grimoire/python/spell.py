@@ -86,6 +86,13 @@ class SpellList(DNDEntryList[Spell]):
                 classes.add(c)
         return classes
 
+    def get_schools(self) -> list[str]:
+        """Returns all schools used by spells in alphabetical order."""
+        schools: set[str] = set()
+        for spell in self.entries:
+            schools.add(spell.school.lower())
+        return sorted(list(schools))
+
 
 def get_spell(name: str, source: str) -> Spell | None:
     spell = [s for s in SPELLS.get(name, allowed_sources={source}) if s.source == source]
