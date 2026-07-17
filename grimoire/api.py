@@ -22,14 +22,12 @@ class API:
     selected: set[Spell] = set()
     filter_options: FilterOptions
 
-    def __init__(self):
+    def __init__(self, debug: bool):
+        self._debug = debug
         self.filter_options = FilterOptions(classes=list(SPELLS.get_classes()))
 
     def get_filter_options(self) -> dict[str, Any]:
         return asdict(self.filter_options)
-
-    def __init__(self, debug: bool):
-        self._debug = debug
 
     def fetch(self) -> list[dict[str, str | int | None]]:
         spells = sorted(
