@@ -1,6 +1,16 @@
+from dataclasses import dataclass
 from typing import Any
 
 from python.dnd_abstract import Description, DNDEntry, DNDEntryList
+
+
+@dataclass(frozen=True)
+class SpellClass:
+    name: str
+    source: str
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.source})"
 
 
 class Spell(DNDEntry):
@@ -13,7 +23,7 @@ class Spell(DNDEntry):
     components: str
     duration: str
     description: list[Description]
-    classes: list[Any]
+    classes: list[SpellClass]
 
     def __init__(self, obj: dict[str, Any]):
         super().__init__(obj)
@@ -30,7 +40,7 @@ class Spell(DNDEntry):
         self.components = obj["components"]
         self.duration = obj["duration"]
         self.description = obj["description"]
-        self.classes = obj["classes"]
+        self.classes = [SpellClass(c["name"], c["source"]) for c in obj.get("classes", [])]
 
         self.select_description = f"{self.level} {self.school}"
 
@@ -43,9 +53,9 @@ class Spell(DNDEntry):
     def get_formatted_classes(self, allowed_sources: set[str]):
         classes: set[str] = set()
         for class_ in self.classes:
-            if class_["source"] not in allowed_sources:
+            if class_.source not in allowed_sources:
                 continue
-            classes.add(class_["name"])
+            classes.add(class_.name)
         return ", ".join(sorted(list(classes)))
 
     @property
@@ -67,6 +77,14 @@ class Spell(DNDEntry):
 class SpellList(DNDEntryList[Spell]):
     type = Spell
     paths = ["spells.json"]
+
+    def get_classes(self) -> set[SpellClass]:
+        """Returns all classes used by spells."""
+        classes: set[SpellClass] = set()
+        for spell in self.entries:
+            for c in spell.classes:
+                classes.add(c)
+        return classes
 
 
 def get_spell(name: str, source: str) -> Spell | None:

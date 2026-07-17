@@ -1,22 +1,33 @@
 import asyncio
 import logging
 import os
+from dataclasses import asdict, dataclass
 from typing import Any
 
 from weasyprint import HTML  # type: ignore
 
 from python.methods import description_to_html, english_to_latin, markdown_to_html
-from python.spell import SPELLS, Spell, get_spell
+from python.spell import SPELLS, Spell, SpellClass, get_spell
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
+
+
+@dataclass(frozen=True)
+class FilterOptions:
+    classes: list[SpellClass]
 
 
 class API:
     _debug: bool
     selected: set[Spell] = set()
+    filter_options: FilterOptions
 
     def __init__(self, debug: bool):
         self._debug = debug
+        self.filter_options = FilterOptions(classes=list(SPELLS.get_classes()))
+
+    def get_filter_options(self) -> dict[str, Any]:
+        return asdict(self.filter_options)
 
     def fetch(self) -> list[dict[str, str | int | None]]:
         spells = sorted(
