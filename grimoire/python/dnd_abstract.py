@@ -118,7 +118,6 @@ class DNDEntry(abc.ABC):
     @abc.abstractmethod
     def __init__(self, obj: dict[str, Any]) -> None:
         self._json = obj
-        pass
 
     @property
     def title(self) -> str:
@@ -161,6 +160,7 @@ class DNDEntryList(abc.ABC, Generic[TDND]):
         with open(path, "r", encoding="utf-8") as file:
             return json.load(file)
 
+    # pylint: disable=unused-argument
     def get(self, query: str, allowed_sources: set[str], fuzzy_threshold: float = 75) -> list[TDND]:
         query = query.strip().lower()
         exact: list[TDND] = []
