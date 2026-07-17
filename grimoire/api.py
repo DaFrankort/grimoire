@@ -19,27 +19,27 @@ class API:
             (s.json for s in SPELLS.entries if s not in self.selected),
             key=lambda spell: (spell["level"], spell["name"]),
         )
-        logging.debug(f"Loaded {len(spells)} spells.")
+        logging.debug("Loaded %s spells.", len(spells))
         return spells
 
     def select(self, name: str, source: str) -> list[dict[str, Any]]:
         spell = get_spell(name, source)
         if spell:
-            logging.debug(f"Selected - {name} {source}")
+            logging.debug("Selected - %s %s", name, source)
             self.selected.add(spell)
         return [s.json for s in self.selected]
 
     def deselect(self, name: str, source: str) -> list[dict[str, Any]]:
         spell = get_spell(name, source)
         if spell:
-            logging.debug(f"Deselected - {name} {source}")
+            logging.debug("Deselected - %s %s", name, source)
             self.selected.remove(spell)
         return [s.json for s in self.selected]
 
     def export_pdf(self, name: str, source: str):
         spell = get_spell(name, source)
         if spell is None:
-            logging.warning(f"Could not find Spell - {name} ({source})")
+            logging.warning("Could not find Spell - %s %s", name, source)
             return f"{name} {source} - Could not find Spell"
 
         with open(TEMPLATE_PATH, "r", encoding="utf-8") as file:
@@ -77,11 +77,11 @@ class API:
 
         try:
             HTML(string=filled_html, base_url=base_path).write_pdf(output_path)  # type: ignore
-        except Exception as e:
-            logging.error(f"Error generating {formatted_name} {source} - {e}")
+        except TypeError as e:
+            logging.error("Error generating %s %s - %s", formatted_name, source, e)
             return f"{formatted_name} {source} - Error generating PDF layout."
 
-        logging.debug(f"Generated {filename}")
+        logging.debug("Generated %s", filename)
         return f"Created {filename} successfully!"
 
     def export_selected_to_pdf(self) -> str:

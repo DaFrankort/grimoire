@@ -118,7 +118,6 @@ class DNDEntry(abc.ABC):
     @abc.abstractmethod
     def __init__(self, obj: dict[str, Any]) -> None:
         self._json = obj
-        pass
 
     @property
     def title(self) -> str:
