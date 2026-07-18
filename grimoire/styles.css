@@ -31,3 +31,57 @@ button {
     display: flex;
     gap: 1rem;
 }
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.dropdown-header {
+  padding: 6px 12px;
+  color: gray;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 140px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-header:hover {
+  background-color: #f9f9f9;
+  border-color: #999;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 200px;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+  padding: 6px 0;
+}
+
+.dropdown-container.active .dropdown-content {
+  display: block;
+}
+
+.dropdown-content label {
+  display: block;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-content label:hover {
+  background-color: #f1f1f1;
+}

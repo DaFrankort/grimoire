@@ -28,15 +28,14 @@
 
   <div class="spells">
     <h3>Available Spells</h3>
-    <!--<button onclick="getSpells()">Load Spells</button>-->
     <div id="filters">
       <div class="search-container">
         <input type="text" id="spell-search" class="search-bar" placeholder="Search spells by name..."
           oninput="filterSpells()">
       </div>
-      <div id="level-filter-container">Loading levels...</div>
-      <div id="school-filter-container">Loading schools...</div>
-      <div id="class-filter-container">Loading classes...</div>
+      <div class="dropdown-container" id="class-filter-container">Loading classes...</div>
+      <div class="dropdown-container" id="level-filter-container">Loading levels...</div>
+      <div class="dropdown-container" id="school-filter-container">Loading schools...</div>
     </div>
     <table id="spells-table" style="display: none; margin-top: 15px">
       <thead>
