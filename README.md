@@ -4,6 +4,9 @@ A D&D 5e tool to generate spellbook pages.
 ## Setup
 Using Python 3.11 or higher, create a virtual environment and install the dependencies:
 ```bash
+git clone https://github.com/DaFrankort/grimoire.git
+cd grimoire
+
 git submodule update --init
 
 python -m venv venv
