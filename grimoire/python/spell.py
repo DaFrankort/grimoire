@@ -1,7 +1,10 @@
+import asyncio
+import re
 from dataclasses import dataclass
 from typing import Any
 
 from python.dnd_abstract import Description, DNDEntry, DNDEntryList
+from python.methods import description_to_html, english_to_latin, markdown_to_html
 
 
 @dataclass(frozen=True)
@@ -72,6 +75,35 @@ class Spell(DNDEntry):
     @property
     def subtitle(self) -> str:
         return f"{self.level} {self.school}"
+
+    def render_html(self, template_path: str) -> str:
+        with open(template_path, "r", encoding="utf-8") as file:
+            template_content = file.read()
+
+        description = description_to_html(self.description)
+        vocal_component = ""
+        if "V" in self.components:
+            vocal_component = asyncio.run(english_to_latin(self.name))
+            if self.level == "Cantrip":
+                vocal_component = vocal_component.split(" ")[0]
+
+        filled_html = template_content.format(
+            name=self.name,
+            source=self.source,
+            subtitle=self.subtitle,
+            vocal=vocal_component,
+            casting=self.casting_time,
+            range=self.spell_range,
+            components=self.components,
+            duration=markdown_to_html(self.duration),
+            description=markdown_to_html(description),
+        )
+        return filled_html
+
+    def get_filename(self) -> str:
+        clean_name = re.sub(r"[^\w\s-]", "", self.name)  # Can't have symbols like ./ as this adheres with path syntax.
+        formatted_name = clean_name.lower().strip().replace(" ", "_")
+        return f"{self.level_int}_{self.source}_{formatted_name}.pdf"
 
 
 class SpellList(DNDEntryList[Spell]):
