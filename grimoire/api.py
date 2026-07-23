@@ -1,9 +1,11 @@
 import logging
 import os
-from dataclasses import asdict, dataclass
 import time
+from dataclasses import asdict, dataclass
 from typing import Any
-from weasyprint import HTML  # type: ignore
+
+from weasyprint import HTML, Document  # type: ignore
+
 from python.spell import SPELLS, Spell, SpellClass, get_spell
 
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "template.html")
@@ -56,7 +58,29 @@ class API:
             self.selected.remove(spell)
         return self._selected_json
 
-    def export_pdf(self, name: str, source: str):
+    def _render_spell_doc(self, html_content: str, base_path: str, min_font_size: float = 10.0) -> Document:
+        """
+        Iteratively scales down font-size until HTML fits on 1 page.
+        Returns a compiled WeasyPrint Document.
+        """
+        current_font_size = 16.0
+        step = 0.5
+
+        while current_font_size > min_font_size:
+            scaled_style = f"<style>body {{ font-size: {current_font_size}px !important; }}</style>"
+            doc = HTML(string=f"{scaled_style}\n{html_content}", base_url=base_path).render()  # type: ignore
+
+            if len(doc.pages) <= 1:  # type: ignore
+                return doc
+            logging.warning(
+                "Spell exceeds one page, shrinking font size: %s => %s", current_font_size, current_font_size - step
+            )
+            current_font_size -= step
+
+        scaled_style = f"<style>body {{ font-size: {min_font_size}px !important; }}</style>"
+        return HTML(string=f"{scaled_style}\n{html_content}", base_url=base_path).render()  # type: ignore
+
+    def export_pdf(self, name: str, source: str) -> str:
         spell = get_spell(name, source)
         if spell is None:
             logging.warning("Could not find Spell - %s %s", name, source)
@@ -64,7 +88,6 @@ class API:
 
         filled_html = spell.render_html(TEMPLATE_PATH)
         filename = spell.get_filename()
-
         output_path = f"generated/{filename}"
         os.makedirs("generated", exist_ok=True)
         base_path = os.path.dirname(TEMPLATE_PATH)
@@ -74,7 +97,9 @@ class API:
             with open(debug_path, "w", encoding="utf-8") as debug_file:
                 debug_file.write(filled_html)
 
-        HTML(string=filled_html, base_url=base_path).write_pdf(output_path)  # type: ignore
+        doc = self._render_spell_doc(filled_html, base_path)
+        doc.write_pdf(output_path)  # type: ignore
+
         logging.debug("Generated %s", filename)
         return filename
 
@@ -83,8 +108,9 @@ class API:
             return "No spells selected."
 
         sorted_selected = sorted(self.selected, key=lambda spell: (spell.level_int, spell.name.lower()))
+        base_path = os.path.dirname(TEMPLATE_PATH)
 
-        html_pages: list[str] = []
+        docs: list[Document] = []
         for spell_item in sorted_selected:
             spell = get_spell(spell_item.name, spell_item.source)
             if spell is None:
@@ -92,27 +118,25 @@ class API:
                 continue
 
             html = spell.render_html(TEMPLATE_PATH)
-            page_wrapped = f'<div style="break-after: page; page-break-after: always;">{html}</div>'  # Wrap in a container that forces a page break after each spell
-            html_pages.append(page_wrapped)
+            docs.append(self._render_spell_doc(html, base_path))
 
-        if not html_pages:
+        if not docs:
             return "No valid spells found to render."
 
-        bundled_html = "\n".join(html_pages)
+        master_doc = docs[0]
+        for doc in docs[1:]:
+            master_doc.pages.extend(doc.pages)  # type: ignore
 
         os.makedirs("generated", exist_ok=True)
         timestamp = int(time.time())
         filename = f"{len(self.selected)}_spells_{timestamp}.pdf"
-        output_path = f"generated/{filename}.pdf"
-
-        os.makedirs("generated", exist_ok=True)
-        base_path = os.path.dirname(TEMPLATE_PATH)
+        output_path = f"generated/{filename}"
 
         if self._debug:
             debug_path = os.path.join(os.path.dirname(__file__), "_debug.html")
             with open(debug_path, "w", encoding="utf-8") as debug_file:
-                debug_file.write(bundled_html)
+                debug_file.write("\n<hr>\n".join(s.render_html(TEMPLATE_PATH) for s in sorted_selected))
 
-        HTML(string=bundled_html, base_url=base_path).write_pdf(output_path)  # type: ignore
+        master_doc.write_pdf(output_path)  # type: ignore
         logging.debug("Generated bundle %s", filename)
-        return f"Created combined PDF with {len(html_pages)} spells at {filename}."
+        return f"Created combined PDF with {len(docs)} spells at {filename}."
