@@ -1,5 +1,5 @@
-# Grimoire
-A D&D 5e tool to generate spellbook pages.
+# Grimoire (WIP)
+A D&D 5e tool to generate spellbook pages as a PDF.
 
 ## Setup
 Using Python 3.11 or higher, create a virtual environment and install the dependencies:
