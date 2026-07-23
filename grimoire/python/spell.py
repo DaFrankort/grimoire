@@ -1,6 +1,6 @@
 import asyncio
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 from typing import Any
 
 from python.dnd_abstract import Description, DNDEntry, DNDEntryList
