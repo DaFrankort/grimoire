@@ -1,55 +1,99 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grimoire - Spell Manager</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="api.js"></script>
 </head>
 
 <body>
-  <div class="selected">
-    <h3>Selected Spells</h3>
-    <button onclick="exportAll()" class="btn-pdf">Selected to PDF</button>
-    <table id="selected-table">
-      <thead>
-        <tr>
-          <th>Spell</th>
-          <th>Source</th>
-          <th>Level</th>
-          <th>School</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="selected-table-list"></tbody>
-    </table>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="header-title">Grimoire</h1>
+      <p class="header-subtitle">D&D Spell Manager</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Selected Spells Section -->
+      <section class="section selected-section" aria-labelledby="selected-heading">
+        <div class="section-header">
+          <h2 id="selected-heading" class="section-title">Selected Spells</h2>
+          <button onclick="exportAll()" class="btn btn-primary btn-export" aria-label="Export selected spells to PDF">
+            📄 Export to PDF
+          </button>
+        </div>
+        
+        <div class="table-wrapper">
+          <table id="selected-table" class="table">
+            <thead>
+              <tr>
+                <th scope="col">Spell</th>
+                <th scope="col">Source</th>
+                <th scope="col">Level</th>
+                <th scope="col">School</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="selected-table-list" class="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Available Spells Section -->
+      <section class="section available-section" aria-labelledby="available-heading">
+        <h2 id="available-heading" class="section-title">Available Spells</h2>
+        
+        <!-- Filters -->
+        <div class="filters" role="search" aria-label="Spell filters">
+          <div class="search-container">
+            <input 
+              type="text" 
+              id="spell-search" 
+              class="search-input" 
+              placeholder="Search spells by name..."
+              oninput="filterSpells()"
+              aria-label="Search spells"
+            >
+            <span class="search-icon">🔍</span>
+          </div>
+          
+          <div class="filter-dropdowns">
+            <div class="dropdown-container" id="class-filter-container" aria-label="Filter by class">
+              <span class="loading-text">Loading classes...</span>
+            </div>
+            <div class="dropdown-container" id="level-filter-container" aria-label="Filter by level">
+              <span class="loading-text">Loading levels...</span>
+            </div>
+            <div class="dropdown-container" id="school-filter-container" aria-label="Filter by school">
+              <span class="loading-text">Loading schools...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spells Table -->
+        <div class="table-wrapper">
+          <table id="spells-table" class="table" style="display: none;">
+            <thead>
+              <tr>
+                <th scope="col">Spell</th>
+                <th scope="col">Source</th>
+                <th scope="col">Level</th>
+                <th scope="col">School</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="spells-table-list" class="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <br>
-
-  <div class="spells">
-    <h3>Available Spells</h3>
-    <div id="filters">
-      <div class="search-container">
-        <input type="text" id="spell-search" class="search-bar" placeholder="Search spells by name..."
-          oninput="filterSpells()">
-      </div>
-      <div class="dropdown-container" id="class-filter-container">Loading classes...</div>
-      <div class="dropdown-container" id="level-filter-container">Loading levels...</div>
-      <div class="dropdown-container" id="school-filter-container">Loading schools...</div>
-    </div>
-    <table id="spells-table" style="display: none; margin-top: 15px">
-      <thead>
-        <tr>
-          <th>Spell</th>
-          <th>Source</th>
-          <th>Level</th>
-          <th>School</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="spells-table-list"></tbody>
-    </table>
-  </div>
+  <script src="api.js"></script>
 </body>
 
 </html>

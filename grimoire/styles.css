@@ -1,87 +1,519 @@
+/* ============================================================================
+   CSS Variables - Theme and Design System (Dark Mode)
+   ============================================================================ */
+:root {
+  /* Colors */
+  --color-primary: #4a9eff;
+  --color-primary-dark: #357abd;
+  --color-primary-hover: #5badff;
+  --color-danger: #ff6b6b;
+  --color-danger-dark: #e63946;
+  --color-danger-hover: #ff7f7f;
+  --color-success: #51cf66;
+  --color-info: #4ecdc4;
+  --color-warning: #ffd93d;
+  
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #14213e;
+  --color-bg-tertiary: #162549;
+  
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #d0d0d0;
+  --color-text-muted: #888888;
+  --color-text-light: #555555;
+  
+  --color-border: #2d3a52;
+  --color-border-light: #242d3f;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* Border Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px var(--color-shadow);
+  --shadow-md: 0 4px 8px var(--color-shadow);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ============================================================================
+   Global Styles
+   ============================================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
 body {
-    font-family: sans-serif;
-    padding: 20px;
-    background: #f4f4f9;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  padding: var(--spacing-lg);
 }
 
-button {
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
+/* ============================================================================
+   Fonts & Text
+   ============================================================================ */
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-base);
 }
 
-.btn-pdf {
-    padding: 4px 8px;
-    background: #dc3545; /* Crimson/red theme for PDF export */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 11px;
-    text-transform: uppercase;
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
 }
 
-.btn-pdf:hover {
-    background: #bd2130;
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-#filters {
-    display: flex;
-    gap: 1rem;
+/* ============================================================================
+   Layout - Container and Main Content
+   ============================================================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+.header {
+  background-color: var(--color-bg-primary);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border-bottom: 4px solid var(--color-primary);
+}
+
+.header-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.header-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+/* ============================================================================
+   Sections
+   ============================================================================ */
+.section {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ============================================================================
+   Buttons
+   ============================================================================ */
+.btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:active {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-export {
+  background-color: var(--color-danger);
+  color: white;
+  font-size: var(--font-size-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.btn-export:hover {
+  background-color: var(--color-danger-hover);
+}
+
+.btn-export:active {
+  background-color: var(--color-danger-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   Search
+   ============================================================================ */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-md);
+  padding-left: calc(var(--spacing-md) + 24px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.filter-dropdowns {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.loading-text {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ============================================================================
+   Dropdown
+   ============================================================================ */
 .dropdown-container {
   position: relative;
   display: inline-block;
-  margin-right: 10px;
 }
 
 .dropdown-header {
-  padding: 6px 12px;
-  color: gray;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
   min-width: 140px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
 }
 
 .dropdown-header:hover {
-  background-color: #f9f9f9;
-  border-color: #999;
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-text-secondary);
+}
+
+.dropdown-header.active {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-secondary);
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #ffffff;
+  top: calc(100% + 2px);
+  left: 0;
+  background-color: var(--color-bg-primary);
   min-width: 200px;
   max-height: 250px;
   overflow-y: auto;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.15);
-  z-index: 10;
-  padding: 6px 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  padding: var(--spacing-sm) 0;
 }
 
 .dropdown-container.active .dropdown-content {
   display: block;
+  animation: slideDown var(--transition-fast) ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdown-content label {
   display: block;
-  padding: 6px 12px;
+  padding: var(--spacing-sm) var(--spacing-md);
   cursor: pointer;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--font-size-base);
+  transition: background-color var(--transition-fast);
+  user-select: none;
 }
 
 .dropdown-content label:hover {
-  background-color: #f1f1f1;
+  background-color: var(--color-bg-secondary);
+}
+
+.dropdown-content input[type="checkbox"] {
+  margin-right: var(--spacing-sm);
+  cursor: pointer;
+}
+
+/* ============================================================================
+   Tables
+   ============================================================================ */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.table thead {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.table tbody {
+  /* Empty to allow targeting */
+}
+
+.table-body tr {
+  border-bottom: 1px solid var(--color-border-light);
+  transition: background-color var(--transition-fast);
+}
+
+.table-body tr:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.table-body tr:last-child {
+  border-bottom: none;
+}
+
+.table td {
+  padding: var(--spacing-md);
+  color: var(--color-text-secondary);
+}
+
+.table td:first-child {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================================
+   Responsive Design
+   ============================================================================ */
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-md);
+  }
+
+  .header {
+    padding: var(--spacing-lg);
+  }
+
+  .section {
+    padding: var(--spacing-md);
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-dropdowns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dropdown-container {
+    width: 100%;
+  }
+
+  .dropdown-header {
+    width: 100%;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .table {
+    font-size: var(--font-size-xs);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--spacing-sm);
+  }
+
+  .btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: var(--spacing-sm);
+  }
+
+  .header {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .header-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .header-subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .section {
+    padding: var(--spacing-sm);
+  }
+
+  .main-content {
+    gap: var(--spacing-lg);
+  }
+
+  .section-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .table {
+    font-size: var(--font-size-xs);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--spacing-xs);
+  }
 }
