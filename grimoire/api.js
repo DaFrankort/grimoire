@@ -12,8 +12,8 @@ function _createSpellRowHtml(spell, isSelected) {
   const escapedSource = spell.source.replace(/'/g, "\\'");
 
   const actionButton = isSelected
-    ? `<button class="btn-sub" onClick="deselectSpell('${escapedName}', '${escapedSource}')">-</button>`
-    : `<button class="btn-add" onClick="selectSpell('${escapedName}', '${escapedSource}')">+</button>`;
+    ? `<button class="btn btn-primary" onClick="deselectSpell('${escapedName}', '${escapedSource}')">-</button>`
+    : `<button class="btn btn-primary" onClick="selectSpell('${escapedName}', '${escapedSource}')">+</button>`;
 
   return `
     <td>${nameHtml}</td>
@@ -21,7 +21,7 @@ function _createSpellRowHtml(spell, isSelected) {
     <td>${spell.level}</td>
     <td>${spell.school}</td>
     <td>
-      <button class="btn-pdf" onclick="downloadPdf('${escapedName}', '${escapedSource}')">PDF</button>
+      <button class="btn btn-primary btn-export" onclick="downloadPdf('${escapedName}', '${escapedSource}')">PDF</button>
       ${actionButton}
     </td>
   `;
