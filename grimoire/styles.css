@@ -271,6 +271,8 @@ a:focus-visible {
   transform: translateY(-50%);
   color: var(--color-text-muted);
   pointer-events: none;
+  width: var(--font-size-xl);
+  opacity: 75%;
 }
 
 .filter-dropdowns {
