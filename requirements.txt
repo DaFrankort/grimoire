@@ -1,5 +1,5 @@
 googletrans==4.0.2
-RapidFuzz==3.14.5
+RapidFuzz==3.14.6
 rich==15.0.0
 pywebview==6.2.1
 weasyprint==69.0
